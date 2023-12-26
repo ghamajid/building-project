@@ -81,7 +81,6 @@
           offsetX: -3
         },
         height: 40,
-        offsetY: 10,
         itemMargin: {
           horizontal: 10,
           vertical: 0
@@ -360,7 +359,6 @@ $(function () {
           targets: 1,
           orderable: false,
           searchable: false,
-          checkboxes: true,
           responsivePriority: 3,
           render: function () {
             return '<input type="checkbox" class="dt-checkboxes form-check-input">';

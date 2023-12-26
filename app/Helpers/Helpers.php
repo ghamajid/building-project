@@ -10,6 +10,18 @@ class Helpers
   public static function appClasses()
   {
 
+    if (!function_exists('__'))
+    {
+      function __($key = null, $replace = [], $locale = 'fa')
+      {
+        if (is_null($key)) {
+          return $key;
+        }
+
+        return trans($key, $replace, $locale);
+      }
+    }
+
     $data = config('custom.custom');
 
 
@@ -31,13 +43,13 @@ class Helpers
       'footerFixed' => false,
       'customizerControls' => [
         'rtl',
-      'style',
-      'headerType',
-      'contentLayout',
-      'layoutCollapsed',
-      'showDropdownOnHover',
-      'layoutNavbarOptions',
-      'themes',
+        'style',
+        'headerType',
+        'contentLayout',
+        'layoutCollapsed',
+        'showDropdownOnHover',
+        'layoutNavbarOptions',
+        'themes',
       ],
       //   'defaultLanguage'=>'en',
     ];
@@ -116,6 +128,7 @@ class Helpers
       'customizerControls' => $data['customizerControls'],
     ];
 
+
     // sidebar Collapsed
     if ($layoutClasses['menuCollapsed'] == true) {
       $layoutClasses['menuCollapsed'] = 'layout-menu-collapsed';
@@ -150,6 +163,7 @@ class Helpers
       $layoutClasses['rtlSupport'] = '/rtl';
     }
 
+
     // RTL Layout/Mode
     if ($layoutClasses['rtlMode'] == true) {
       $layoutClasses['rtlMode'] = 'rtl';
@@ -158,6 +172,7 @@ class Helpers
       $layoutClasses['rtlMode'] = 'ltr';
       $layoutClasses['textDirection'] = 'ltr';
     }
+
 
     // Show DropdownOnHover for Horizontal Menu
     if ($layoutClasses['showDropdownOnHover'] == true) {
@@ -187,4 +202,5 @@ class Helpers
       }
     }
   }
+
 }

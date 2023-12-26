@@ -661,7 +661,7 @@ class TemplateCustomizer {
             this._loadingState(false);
           });
           if (e.target.value === 'rtl') {
-            window.location.href = baseUrl + 'lang/ar';
+            window.location.href = baseUrl + 'lang/fa';
           } else {
             window.location.href = baseUrl + 'lang/en';
           }
@@ -1204,7 +1204,7 @@ TemplateCustomizer.DIRECTIONS = [
   },
   {
     name: 'rtl',
-    title: 'Right to Left (Ar)'
+    title: 'Right to Left (Fa)'
   }
 ];
 
@@ -1261,7 +1261,20 @@ TemplateCustomizer.LANGUAGES = {
     content_label: 'Inhalt',
     layout_navbar_label: 'Art der Navigationsleiste',
     direction_label: 'Richtung'
-  }
+  },
+  fa: {
+    panel_header: 'Template Customizer',
+    panel_sub_header: 'Customize and preview in real time',
+    theming_header: 'Theming',
+    style_label: 'Style (Mode)',
+    theme_label: 'Themes',
+    layout_header: 'Layout',
+    layout_label: 'Menu (Navigation)',
+    layout_header_label: 'Header Types',
+    content_label: 'Content',
+    layout_navbar_label: 'Navbar Type',
+    direction_label: 'Direction'
+  },
 };
 
 export { TemplateCustomizer };

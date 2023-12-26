@@ -63,11 +63,11 @@ $navbarDetached = ($navbarDetached ?? '');
                 </a>
               </li>
               <li>
-                <a class="dropdown-item {{ app()->getLocale() === 'fr' ? 'active' : '' }}" href="{{url('lang/fr')}}" data-language="fr" data-text-direction="ltr">
-                  <span class="align-middle">French</span>
+                <a class="dropdown-item {{ app()->getLocale() === 'fa' ? 'active' : '' }}" href="{{url('lang/fa')}}" data-language="fa" data-text-direction="rtl">
+                  <span class="align-middle">Persian</span>
                 </a>
               </li>
-              <li>
+             {{-- <li>
                 <a class="dropdown-item {{ app()->getLocale() === 'ar' ? 'active' : '' }}" href="{{url('lang/ar')}}" data-language="ar" data-text-direction="rtl">
                   <span class="align-middle">Arabic</span>
                 </a>
@@ -76,7 +76,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 <a class="dropdown-item {{ app()->getLocale() === 'de' ? 'active' : '' }}" href="{{url('lang/de')}}" data-language="de" data-text-direction="ltr">
                   <span class="align-middle">German</span>
                 </a>
-              </li>
+              </li>--}}
             </ul>
           </li>
           <!--/ Language -->

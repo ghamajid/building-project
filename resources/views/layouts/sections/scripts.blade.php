@@ -11,7 +11,17 @@
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Theme JS-->
 <script src="{{ asset(mix('assets/js/main.js')) }}"></script>
-
+<script>
+  $('table.dataTable').DataTable( {
+    "oLanguage": {
+      "sLengthMenu": "Display _MENU_ records per page",
+      "sZeroRecords": "Nothing found - sorry",
+      "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+      "sInfoEmpty": "Showing 0 to 0 of 0 records",
+      "sInfoFiltered": "(filtered from _MAX_ total records)"
+    }
+  });
+</script>
 <!-- END: Theme JS-->
 <!-- Pricing Modal JS-->
 @stack('pricing-script')

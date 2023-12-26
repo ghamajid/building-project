@@ -337,7 +337,8 @@
         intersect: true,
         x: {
           show: false
-        }
+        },
+        enabled: false
       },
       xaxis: {
         labels: {
@@ -354,9 +355,6 @@
         labels: {
           show: false
         }
-      },
-      tooltip: {
-        enabled: false
       },
       markers: {
         size: 3.5,
