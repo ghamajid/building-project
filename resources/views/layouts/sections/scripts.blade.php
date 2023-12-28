@@ -12,7 +12,7 @@
 <!-- BEGIN: Theme JS-->
 <script src="{{ asset(mix('assets/js/main.js')) }}"></script>
 <script>
-  $('table.dataTable').DataTable( {
+/*  $('table.dataTable').DataTable( {
     "oLanguage": {
       "sLengthMenu": "Display _MENU_ records per page",
       "sZeroRecords": "Nothing found - sorry",
@@ -20,7 +20,7 @@
       "sInfoEmpty": "Showing 0 to 0 of 0 records",
       "sInfoFiltered": "(filtered from _MAX_ total records)"
     }
-  });
+  });*/
 </script>
 <!-- END: Theme JS-->
 <!-- Pricing Modal JS-->
