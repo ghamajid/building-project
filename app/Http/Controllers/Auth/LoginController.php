@@ -42,6 +42,7 @@ class LoginController extends Controller
 
   public function showLoginForm()
   {
+    //dd(Hash::make('123456789'));
     $pageConfigs = ['myLayout' => 'blank'];
     return view('auth.login', ['pageConfigs' => $pageConfigs]);
   }

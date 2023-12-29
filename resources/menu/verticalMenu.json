@@ -1,40 +1,31 @@
 {
   "menu": [
     {
-      "name": "Dashboards",
+      "name": "lang.Dashboards",
       "icon": "menu-icon tf-icons ti ti-smart-home",
       "url": "/",
       "slug": "dashboard-analytics"
     },
     {
-      "menuHeader": "Apps & Pages"
+      "menuHeader": "lang.Management"
     },
     {
-      "name": "Users Management",
-      "icon": "menu-icon tf-icons ti ti-brand-php",
-      "url": "laravel/user-management",
-      "slug": "laravel-example-user-management"
-    },
-    {
-      "menuHeader": "Apps & Pages"
-    },
-    {
-      "name": "Users Management",
+      "name": "lang.Users Management",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "app-user",
+      "slug": "users",
       "submenu": [
         {
-          "name": "Users",
+          "name": "lang.Users",
           "url": "users/list",
-          "slug": "app-user-lists"
+          "slug": "users-list"
         },
         {
-          "name": "Roles",
+          "name": "lang.Roles",
           "url": "app/access-roles",
           "slug": "app-access-roles"
         },
         {
-          "name": "Permissions",
+          "name": "lang.Permissions",
           "url": "app/access-permission",
           "slug": "app-access-permission"
         }

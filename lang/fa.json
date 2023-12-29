@@ -3,5 +3,11 @@
   "Users Management": "مدیریت کاربران",
   "Users": "کاربران",
   "Roles": "نقش ها",
-  "Permissions": "دسترسی ها"
+  "Permissions": "دسترسی ها",
+  "Row": "ردیف",
+  "User": "نام کاربر",
+  "Email": "نام کاربری",
+  "Verified": "تایید شده",
+  "Action": "عملیات",
+  "Add User": "افزودن کاربر"
 }

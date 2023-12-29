@@ -40,8 +40,10 @@ class UsersManagement extends Controller
     $columns = [
       1 => 'id',
       2 => 'name',
-      3 => 'email',
-      4 => 'email_verified_at',
+      3 => 'username',
+      4 => 'email',
+      5 => 'email_verified_at',
+      6 => 'contact',
     ];
 
     $search = [];
@@ -65,6 +67,7 @@ class UsersManagement extends Controller
 
       $users = User::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
+        ->orWhere('username', 'LIKE', "%{$search}%")
         ->orWhere('email', 'LIKE', "%{$search}%")
         ->offset($start)
         ->limit($limit)
@@ -73,6 +76,7 @@ class UsersManagement extends Controller
 
       $totalFiltered = User::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
+        ->orWhere('username', 'LIKE', "%{$search}%")
         ->orWhere('email', 'LIKE', "%{$search}%")
         ->count();
     }
@@ -86,29 +90,31 @@ class UsersManagement extends Controller
       foreach ($users as $user) {
         $nestedData['id'] = $user->id;
         $nestedData['fake_id'] = ++$ids;
+        $nestedData['username'] = $user->username;
         $nestedData['name'] = $user->name;
         $nestedData['email'] = $user->email;
         $nestedData['email_verified_at'] = $user->email_verified_at;
+        $nestedData['contact'] = $user->contact;
 
         $data[] = $nestedData;
       }
     }
+    return response()->json([
+      'draw' => intval($request->input('draw')),
+      'recordsTotal' => intval($totalData),
+      'recordsFiltered' => intval($totalFiltered),
+      'code' => 200,
+      'data' => $data,
+    ]);
+    /*if ($data) {
 
-    if ($data) {
-      return response()->json([
-        'draw' => intval($request->input('draw')),
-        'recordsTotal' => intval($totalData),
-        'recordsFiltered' => intval($totalFiltered),
-        'code' => 200,
-        'data' => $data,
-      ]);
     } else {
       return response()->json([
         'message' => 'Internal Server Error',
         'code' => 500,
         'data' => [],
       ]);
-    }
+    }*/
   }
 
   /**
@@ -124,45 +130,40 @@ class UsersManagement extends Controller
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param \Illuminate\Http\Request $request
    * @return \Illuminate\Http\Response
    */
   public function store(Request $request)
   {
     $userID = $request->id;
-
-    if ($userID) {
-      // update the value
-      $users = User::updateOrCreate(
-        ['id' => $userID],
-        ['name' => $request->name, 'email' => $request->email]
-      );
-
-      // user updated
-      return response()->json('Updated');
-    } else {
-      // create new one if email is unique
-      $userEmail = User::where('email', $request->email)->first();
-
-      if (empty($userEmail)) {
+    $userEmail = User::where('email', $request->email)->first();
+    if (empty($userEmail)) {
+      if(empty($request->password)){
         $users = User::updateOrCreate(
           ['id' => $userID],
-          ['name' => $request->name, 'email' => $request->email, 'password' => bcrypt(Str::random(10))]
+          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email]
         );
-
-        // user created
-        return response()->json('Created');
-      } else {
-        // user already exist
-        return response()->json(['message' => "already exits"], 422);
+      }else{
+        $users = User::updateOrCreate(
+          ['id' => $userID],
+          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email, 'password' => bcrypt($request->password)]
+        );
       }
+    }else {
+      // user already exist
+      return response()->json(['message' => "already exits"], 422);
     }
+
+    if($users)
+      return response()->json(($userID)?'Updated':'Created');
+    else
+      return response()->json(['message' => "server error"], 500);
   }
 
   /**
    * Display the specified resource.
    *
-   * @param  int  $id
+   * @param int $id
    * @return \Illuminate\Http\Response
    */
   public function show($id)
@@ -173,7 +174,7 @@ class UsersManagement extends Controller
   /**
    * Show the form for editing the specified resource.
    *
-   * @param  int  $id
+   * @param int $id
    * @return \Illuminate\Http\Response
    */
   public function edit($id)
@@ -188,8 +189,8 @@ class UsersManagement extends Controller
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
+   * @param \Illuminate\Http\Request $request
+   * @param int $id
    * @return \Illuminate\Http\Response
    */
   public function update(Request $request, $id)
@@ -199,7 +200,7 @@ class UsersManagement extends Controller
   /**
    * Remove the specified resource from storage.
    *
-   * @param  int  $id
+   * @param int $id
    * @return \Illuminate\Http\Response
    */
   public function destroy($id)

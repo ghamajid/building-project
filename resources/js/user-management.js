@@ -12,11 +12,20 @@ $(function () {
     userView = baseUrl + 'app/user/view/account',
     offCanvasForm = $('#offcanvasAddUser');
 
-  if (select2.length) {
+  /*if (select2.length) {
     var $this = select2;
     $this.wrap('<div class="position-relative"></div>').select2({
       placeholder: 'Select Country',
       dropdownParent: $this.parent()
+    });
+  }*/
+  if (select2.length) {
+    select2.each(function () {
+      var $this = $(this);
+      $this.wrap('<div class="position-relative"></div>').select2({
+        placeholder: trans('lang.Select value'),
+        dropdownParent: $this.parent()
+      });
     });
   }
 
@@ -40,6 +49,7 @@ $(function () {
         { data: '' },
         { data: 'id' },
         { data: 'name' },
+        { data: 'username' },
         { data: 'email' },
         { data: 'email_verified_at' },
         { data: 'action' }
@@ -101,8 +111,17 @@ $(function () {
           }
         },
         {
-          // User email
+          // Username
           targets: 3,
+          render: function (data, type, full, meta) {
+            var $username = full['username'];
+
+            return '<span class="user-name">' + $username + '</span>';
+          }
+        },
+        {
+          // User email
+          targets: 4,
           render: function (data, type, full, meta) {
             var $email = full['email'];
 
@@ -111,7 +130,7 @@ $(function () {
         },
         {
           // email verify
-          targets: 4,
+          targets: 5,
           className: 'text-center',
           render: function (data, type, full, meta) {
             var $verified = full['email_verified_at'];
@@ -125,7 +144,6 @@ $(function () {
         {
           // Actions
           targets: -1,
-          title: 'Actions',
           searchable: false,
           orderable: false,
           render: function (data, type, full, meta) {
@@ -158,23 +176,27 @@ $(function () {
       language: {
         sLengthMenu: '_MENU_',
         search: '',
-        sInfo: "Show111ing _START_ to _END_ of _TOTAL_ records",
-        searchPlaceholder: 'Search..'
+        sInfo: trans('lang.Showing records'),
+        searchPlaceholder: trans('lang.Search'),
+        paginate: {
+          previous: '<span class="ti ti-chevron-right"></span>',
+          next: '<span class="ti ti-chevron-left"></span>'
+        }
       },
       // Buttons with Dropdown
       buttons: [
         {
           extend: 'collection',
           className: 'btn btn-label-primary dropdown-toggle mx-3',
-          text: '<i class="ti ti-logout rotate-n90 me-2"></i>Export',
+          text: '<i class="ti ti-logout rotate-n90 me-2"></i>'+trans('lang.Export'),
           buttons: [
             {
               extend: 'print',
-              title: 'Users',
-              text: '<i class="ti ti-printer me-2" ></i>Print',
+              title: trans('lang.Users'),
+              text: '<i class="ti ti-printer me-2" ></i>'+trans('lang.Print'),
               className: 'dropdown-item',
               exportOptions: {
-                columns: [2, 3],
+                columns: [2, 3, 4],
                 // prevent avatar to be print
                 format: {
                   body: function (inner, coldex, rowdex) {
@@ -207,7 +229,7 @@ $(function () {
             {
               extend: 'csv',
               title: 'Users',
-              text: '<i class="ti ti-file-text me-2" ></i>Csv',
+              text: '<i class="ti ti-file-text me-2" ></i>'+trans('lang.Csv'),
               className: 'dropdown-item',
               exportOptions: {
                 columns: [2, 3],
@@ -230,7 +252,7 @@ $(function () {
             {
               extend: 'excel',
               title: 'Users',
-              text: '<i class="ti ti-file-spreadsheet me-2"></i>Excel',
+              text: '<i class="ti ti-file-spreadsheet me-2"></i>'+trans('lang.Excel'),
               className: 'dropdown-item',
               exportOptions: {
                 columns: [2, 3],
@@ -253,7 +275,7 @@ $(function () {
             {
               extend: 'pdf',
               title: 'Users',
-              text: '<i class="ti ti-file-text me-2"></i>Pdf',
+              text: '<i class="ti ti-file-text me-2"></i>'+trans('lang.Pdf'),
               className: 'dropdown-item',
               exportOptions: {
                 columns: [2, 3],
@@ -276,7 +298,7 @@ $(function () {
             {
               extend: 'copy',
               title: 'Users',
-              text: '<i class="ti ti-copy me-1" ></i>Copy',
+              text: '<i class="ti ti-copy me-1" ></i>'+trans('lang.Copy'),
               className: 'dropdown-item',
               exportOptions: {
                 columns: [2, 3],
@@ -299,7 +321,7 @@ $(function () {
           ]
         },
         {
-          text: '<i class="ti ti-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Add New User</span>',
+          text: '<i class="ti ti-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">'+trans('lang.Add New User')+'</span>',
           className: 'add-new btn btn-primary',
           attr: {
             'data-bs-toggle': 'offcanvas',
@@ -355,11 +377,12 @@ $(function () {
 
     // sweetalert for confirmation of delete
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: trans('lang.Are you sure'),
+      text: trans('lang.You wont be able to revert this'),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: trans('lang.Submit'),
+      cancelButtonText: trans('lang.Cancel'),
       customClass: {
         confirmButton: 'btn btn-primary me-3',
         cancelButton: 'btn btn-label-secondary'
@@ -382,16 +405,17 @@ $(function () {
         // success sweetalert
         Swal.fire({
           icon: 'success',
-          title: 'Deleted!',
-          text: 'The user has been deleted!',
+          title: trans('lang.Deleted')+'!',
+          text: trans('lang.The Record has been deleted'),
+          confirmButtonText: trans('lang.Submit'),
           customClass: {
             confirmButton: 'btn btn-success'
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire({
-          title: 'Cancelled',
-          text: 'The User is not deleted!',
+          title: trans('lang.Cancelled'),
+          text: trans('lang.The Record is not deleted'),
           icon: 'error',
           customClass: {
             confirmButton: 'btn btn-success'
@@ -412,12 +436,14 @@ $(function () {
     }
 
     // changing the title of offcanvas
-    $('#offcanvasAddUserLabel').html('Edit User');
+    $('#offcanvasAddUserLabel').html(trans('lang.Edit User'));
 
     // get data
     $.get(`${baseUrl}users-list\/${user_id}\/edit`, function (data) {
       $('#user_id').val(data.id);
       $('#add-user-fullname').val(data.name);
+      $('#add-user-email').val(data.email);
+      $('#add-username').val(data.username);
       $('#add-user-email').val(data.email);
     });
   });
@@ -425,7 +451,7 @@ $(function () {
   // changing the title
   $('.add-new').on('click', function () {
     $('#user_id').val(''); //reseting input field
-    $('#offcanvasAddUserLabel').html('Add User');
+    $('#offcanvasAddUserLabel').html(trans("lang.Add User"));
   });
 
   // Filter form control to default size
@@ -444,31 +470,48 @@ $(function () {
       name: {
         validators: {
           notEmpty: {
-            message: 'Please enter fullname'
+            message: trans_choice('validation.required',1,{attribute:trans('lang.User')})
           }
         }
       },
       email: {
         validators: {
           notEmpty: {
-            message: 'Please enter your email'
+            message: trans_choice('validation.required',1,{attribute:trans('lang.Email')})
           },
           emailAddress: {
-            message: 'The value is not a valid email address'
+            message: trans_choice('validation.email',1,{attribute:trans('lang.Email')})
           }
         }
       },
-      userContact: {
+      contact: {
         validators: {
           notEmpty: {
-            message: 'Please enter your contact'
+            message: trans_choice('validation.required',1,{attribute:trans('lang.Contact')})
           }
         }
       },
-      company: {
+      roles: {
         validators: {
           notEmpty: {
-            message: 'Please enter your company'
+            message: trans_choice('validation.required',1,{attribute:trans('lang.User Role')})
+          }
+        }
+      },
+      username: {
+        validators: {
+          notEmpty: {
+            message: trans_choice('validation.required',1,{attribute:trans('lang.Username')})
+          }
+        }
+      },
+      confirmPassword: {
+        validators: {
+          identical: {
+            compare: function () {
+              return addNewUserForm.querySelector('[name="password"]').value;
+            },
+            message: trans_choice('validation.confirmed',1,{attribute:trans('lang.Password')})
           }
         }
       }
@@ -501,8 +544,9 @@ $(function () {
         // sweetalert
         Swal.fire({
           icon: 'success',
-          title: `Successfully ${status}!`,
-          text: `User ${status} Successfully.`,
+          title: trans(`lang.Successfully ${status}`)+'!',
+          text: trans(`lang.Record ${status} Successfully`),
+          confirmButtonText: trans('lang.Submit'),
           customClass: {
             confirmButton: 'btn btn-success'
           }
@@ -511,8 +555,8 @@ $(function () {
       error: function (err) {
         offCanvasForm.offcanvas('hide');
         Swal.fire({
-          title: 'Duplicate Entry!',
-          text: 'Your email should be unique.',
+          title: trans('lang.Duplicate Entry')+'!',
+          text: trans('lang.Your email and username should be unique'),
           icon: 'error',
           customClass: {
             confirmButton: 'btn btn-success'
