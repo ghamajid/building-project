@@ -45,4 +45,5 @@ return [
   "Replay Password"=> "تکرار گذرواژه",
   "Select value"=> "انتخاب کنید ...",
   "Management"=> "مدیریت",
+  "Details"=> "جزئیات :name",
 ];

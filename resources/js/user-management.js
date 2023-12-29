@@ -335,7 +335,7 @@ $(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return 'Details of ' + data['name'];
+              return trans_choice('lang.Details',1,{name:data['name']});
             }
           }),
           type: 'column',
