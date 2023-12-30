@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\laravel_example\UserManagement;
 use App\Http\Controllers\users\UsersManagement;
+use App\Http\Controllers\roles\RolesManagement;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\dashboard\Crm;
 use App\Http\Controllers\language\LanguageController;
@@ -363,8 +364,13 @@ Route::middleware(['auth'])->group(function () {
 
 
 // majid
-  Route::get('/users/list', [UsersManagement::class, 'UserManagement'])->name('users-list');
+  //users routes
+  Route::get('/management/users', [UsersManagement::class, 'UserManagement'])->name('management-users');
   Route::resource('/users-list', UsersManagement::class);
+
+  //roles routes
+  Route::get('/management/roles', [RolesManagement::class, 'RoleManagement'])->name('management-roles');
+  Route::resource('/roles-list', RolesManagement::class);
 
 });
 Auth::routes();

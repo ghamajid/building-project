@@ -12,17 +12,17 @@
     {
       "name": "lang.Users Management",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "users",
+      "slug": "management",
       "submenu": [
         {
           "name": "lang.Users",
-          "url": "users/list",
-          "slug": "users-list"
+          "url": "management/users",
+          "slug": "management-users"
         },
         {
           "name": "lang.Roles",
-          "url": "app/access-roles",
-          "slug": "app-access-roles"
+          "url": "management/roles",
+          "slug": "management-roles"
         },
         {
           "name": "lang.Permissions",

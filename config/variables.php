@@ -2,9 +2,9 @@
 // Variables
 return [
   "creatorName" => "Majid",
-  "creatorUrl" => "https://pixinvent.com",
+  "creatorUrl" => "https://majid.com",
   "templateName" => "مشارکت در ساخت",
-  "templateSuffix" => "مشارکت در ساخت",
+  "templateSuffix" => "",
   "templateVersion" => "1.0.0",
   "templateFree" => false,
   "templateDescription" => "Start your development with a Dashboard for Bootstrap 5",

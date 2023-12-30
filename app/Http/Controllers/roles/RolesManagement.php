@@ -1,33 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\users;
+namespace App\Http\Controllers\roles;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
 
-class UsersManagement extends Controller
+class RolesManagement extends Controller
 {
   /**
    * Redirect to user-management view.
    *
    */
-  public function UserManagement()
+  public function RoleManagement()
   {
-    $users = User::all();
-    $userCount = $users->count();
-    $verified = User::whereNotNull('email_verified_at')->get()->count();
-    $notVerified = User::whereNull('email_verified_at')->get()->count();
-    $usersUnique = $users->unique(['email']);
-    $userDuplicates = $users->diff($usersUnique)->count();
-
-    return view('management.users', [
-      'totalUser' => $userCount,
-      'verified' => $verified,
-      'notVerified' => $notVerified,
-      'userDuplicates' => $userDuplicates,
-    ]);
+    return view('management.roles');
   }
 
   /**
@@ -40,15 +29,11 @@ class UsersManagement extends Controller
     $columns = [
       1 => 'id',
       2 => 'name',
-      3 => 'username',
-      4 => 'email',
-      5 => 'email_verified_at',
-      6 => 'contact',
     ];
 
     $search = [];
 
-    $totalData = User::count();
+    $totalData = Role::count();
 
     $totalFiltered = $totalData;
 
@@ -58,43 +43,35 @@ class UsersManagement extends Controller
     $dir = $request->input('order.0.dir');
 
     if (empty($request->input('search.value'))) {
-      $users = User::offset($start)
+      $roles = Role::offset($start)
         ->limit($limit)
         ->orderBy($order, $dir)
         ->get();
     } else {
       $search = $request->input('search.value');
 
-      $users = User::where('id', 'LIKE', "%{$search}%")
+      $roles = Role::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
-        ->orWhere('username', 'LIKE', "%{$search}%")
-        ->orWhere('email', 'LIKE', "%{$search}%")
         ->offset($start)
         ->limit($limit)
         ->orderBy($order, $dir)
         ->get();
 
-      $totalFiltered = User::where('id', 'LIKE', "%{$search}%")
+      $totalFiltered = Role::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
-        ->orWhere('username', 'LIKE', "%{$search}%")
-        ->orWhere('email', 'LIKE', "%{$search}%")
         ->count();
     }
 
     $data = [];
 
-    if (!empty($users)) {
+    if (!empty($roles)) {
       // providing a dummy id instead of database ids
       $ids = $start;
 
-      foreach ($users as $user) {
-        $nestedData['id'] = $user->id;
+      foreach ($roles as $role) {
+        $nestedData['id'] = $role->id;
         $nestedData['fake_id'] = ++$ids;
-        $nestedData['username'] = $user->username;
-        $nestedData['name'] = $user->name;
-        $nestedData['email'] = $user->email;
-        $nestedData['email_verified_at'] = $user->email_verified_at;
-        $nestedData['contact'] = $user->contact;
+        $nestedData['name'] = $role->name;
 
         $data[] = $nestedData;
       }
@@ -106,15 +83,6 @@ class UsersManagement extends Controller
       'code' => 200,
       'data' => $data,
     ]);
-    /*if ($data) {
-
-    } else {
-      return response()->json([
-        'message' => 'Internal Server Error',
-        'code' => 500,
-        'data' => [],
-      ]);
-    }*/
   }
 
   /**
@@ -135,27 +103,20 @@ class UsersManagement extends Controller
    */
   public function store(Request $request)
   {
-    $userID = $request->id;
-    $userEmail = User::where('email', $request->email)->first();
-    if (empty($userEmail)) {
-      if(empty($request->password)){
-        $users = User::updateOrCreate(
-          ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email]
-        );
-      }else{
-        $users = User::updateOrCreate(
-          ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email, 'password' => bcrypt($request->password)]
-        );
-      }
+    $roleID = $request->id;
+    $roleName = Role::where('name', $request->name)->first();
+    if (empty($roleName)) {
+      $roles = Role::updateOrCreate(
+        ['id' => $roleID],
+        ['name' => $request->name, 'guard_name'=>config('auth.defaults.guard')]
+      );
     }else {
       // user already exist
       return response()->json(['message' => "already exits"], 422);
     }
 
-    if($users)
-      return response()->json(($userID)?'Updated':'Created');
+    if($roles)
+      return response()->json(($roleID)?'Updated':'Created');
     else
       return response()->json(['message' => "server error"], 500);
   }
@@ -181,9 +142,9 @@ class UsersManagement extends Controller
   {
     $where = ['id' => $id];
 
-    $users = User::where($where)->first();
+    $roles = Role::where($where)->first();
 
-    return response()->json($users);
+    return response()->json($roles);
   }
 
   /**
@@ -205,6 +166,6 @@ class UsersManagement extends Controller
    */
   public function destroy($id)
   {
-    $users = User::where('id', $id)->delete();
+    $roles = Role::where('id', $id)->delete();
   }
 }

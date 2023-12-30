@@ -46,4 +46,10 @@ return [
   "Select value"=> "انتخاب کنید ...",
   "Management"=> "مدیریت",
   "Details"=> "جزئیات :name",
+  "Roles Management"=> "مدیریت نقش ها",
+  "Add New Role"=> "افزودن نقش",
+  "Edit Role"=> "ویرایش نقش",
+  "Add Role"=> "افزودن نقش",
+  "Role Name"=> "نام نقش",
+  "Role Permission"=> "دسترسی ها",
 ];
