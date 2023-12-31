@@ -52,4 +52,8 @@ return [
   "Add Role"=> "افزودن نقش",
   "Role Name"=> "نام نقش",
   "Role Permission"=> "دسترسی ها",
+  "Subtitle Login"=> "ارائه خدمات ارزشمند، رمز موفقیت و محبوبیت ما به حساب می آید",
+  "Sign in"=> "ورود",
+  "Remember Me"=> "مرا به خاطر بسپار",
+  "Forgot Password"=> "فراموشی گذرواژه",
 ];

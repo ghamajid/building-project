@@ -5,7 +5,7 @@
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Login Cover - Pages')
+@section('title', __('lang.Sign in'))
 
 @section('vendor-style')
   <!-- Vendor -->
@@ -49,15 +49,15 @@
       <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
         <div class="w-px-400 mx-auto">
           <!-- Logo -->
-          <div class="app-brand mb-4">
-            <a href="{{url('/')}}" class="app-brand-link gap-2">
+          <div class=" mb-4 text-center">
+            <a href="{{url('/')}}" class=" gap-2">
               <span
-                class="app-brand-logo demo">@include('_partials.macros',["height"=>20,"withbg"=>'fill: #fff;'])</span>
+                class=" demo">@include('_partials.macros',["height"=>50,"width"=>50,"withbg"=>'fill: #fff;'])</span>
             </a>
           </div>
           <!-- /Logo -->
-          <h3 class=" mb-1">Welcome to {{config('variables.templateName')}}! 👋</h3>
-          <p class="mb-4">Please sign-in to your account and start the adventure</p>
+          <h3 class=" mb-1">{{config('variables.templateName')}}</h3>
+          <p class="mb-4">{{__('lang.Subtitle Login')}}</p>
 
           <form id="formAuthentication" class="mb-3" action="{{url('login')}}" method="POST">
             {{ csrf_field() }}
@@ -66,7 +66,7 @@
               $password = null;
             @endphp
             <div class="mb-3 ">
-              <label for="email" class="form-label">Email or Username</label>
+              <label for="email" class="form-label">{{__('lang.Username')}}</label>
               <input type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}"
                      value="{{$username}}" id="email" name="username" placeholder="Enter username" autofocus>
               @if ($errors->has('username'))
@@ -78,9 +78,9 @@
             </div>
             <div class="mb-3 form-password-toggle">
               <div class="d-flex justify-content-between">
-                <label class="form-label" for="password">Password</label>
+                <label class="form-label" for="password">{{__('lang.Password')}}</label>
                 <a href="{{url('auth/forgot-password-cover')}}">
-                  <small>Forgot Password?</small>
+                  <small>{{__('lang.Forgot Password')}}!</small>
                 </a>
               </div>
               <div class="input-group input-group-merge">
@@ -96,12 +96,12 @@
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="remember-me">
                 <label class="form-check-label" for="remember-me">
-                  Remember Me
+                  {{__('lang.Remember Me')}}
                 </label>
               </div>
             </div>
             <button class="btn btn-primary d-grid w-100">
-              Sign in
+              {{__('lang.Sign in')}}
             </button>
           </form>
 
