@@ -78,12 +78,12 @@
           <div class="mb-3">
             <label class="form-label" for="user-role">{{__('lang.User Role')}}</label>
             <div class="select2-primary">
-              <select id="user-role" class="form-select form-select select2" name="roles" multiple>
-                <option value="subscriber">Subscriber</option>
-                <option value="editor">Editor</option>
-                <option value="maintainer">Maintainer</option>
-                <option value="author">Author</option>
-                <option value="admin">Admin</option>
+              <select id="user-role" class="form-select form-select select2" name="roles[]" multiple>
+                @if($roles)
+                  @foreach($roles as $role)
+                    <option value="{{$role->id}}">{{$role->name}}</option>
+                  @endforeach
+                @endif
               </select>
             </div>
           </div>

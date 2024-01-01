@@ -113,6 +113,11 @@ return new class extends Migration
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
 
+      Schema::create('role_user', function (Blueprint $table) {
+        $table->integer('user_id');
+        $table->integer('role_id');
+      });
+
         app('cache')
             ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));

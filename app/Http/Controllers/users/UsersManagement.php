@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\users;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -15,18 +16,10 @@ class UsersManagement extends Controller
    */
   public function UserManagement()
   {
-    $users = User::all();
-    $userCount = $users->count();
-    $verified = User::whereNotNull('email_verified_at')->get()->count();
-    $notVerified = User::whereNull('email_verified_at')->get()->count();
-    $usersUnique = $users->unique(['email']);
-    $userDuplicates = $users->diff($usersUnique)->count();
+    $roles = Role::all();
 
     return view('management.users', [
-      'totalUser' => $userCount,
-      'verified' => $verified,
-      'notVerified' => $notVerified,
-      'userDuplicates' => $userDuplicates,
+      'roles' => $roles,
     ]);
   }
 
@@ -139,22 +132,28 @@ class UsersManagement extends Controller
     $userEmail = User::where('email', $request->email)->first();
     if (empty($userEmail)) {
       if(empty($request->password)){
-        $users = User::updateOrCreate(
+        $user = User::updateOrCreate(
           ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email]
+          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact,'status' => 1, 'email' => $request->email]
         );
       }else{
-        $users = User::updateOrCreate(
+        $user = User::updateOrCreate(
           ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact, 'email' => $request->email, 'password' => bcrypt($request->password)]
+          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact,'status' => 1, 'email' => $request->email, 'password' => bcrypt($request->password)]
         );
+      }
+      if($request->roles && $user){
+        foreach($request->roles as $role){
+          $role = Role::find($role);
+          $user->assignRole($role);
+        }
       }
     }else {
       // user already exist
       return response()->json(['message' => "already exits"], 422);
     }
 
-    if($users)
+    if($user)
       return response()->json(($userID)?'Updated':'Created');
     else
       return response()->json(['message' => "server error"], 500);
@@ -181,7 +180,7 @@ class UsersManagement extends Controller
   {
     $where = ['id' => $id];
 
-    $users = User::where($where)->first();
+    $users = User::with('roles')->where($where)->first();
 
     return response()->json($users);
   }

@@ -444,6 +444,18 @@ $(function () {
       $('#add-user-fullname').val(data.name);
       $('#add-user-email').val(data.email);
       $('#add-username').val(data.username);
+      if(data.roles.length){
+        let param = [];
+        data.roles.forEach(function (arrayItem) {
+          param.push(arrayItem.id);
+        });
+        $('#user-role').val(param).select2({
+          placeholder: trans('lang.Select value'),
+          dropdownParent: $('#user-role').parent()
+        });
+      }
+
+
       $('#add-user-email').val(data.email);
     });
   });
@@ -463,7 +475,6 @@ $(function () {
 
   // validating form and updating user's data
   const addNewUserForm = document.getElementById('addNewUserForm');
-
   // user form validation
   const fv = FormValidation.formValidation(addNewUserForm, {
     fields: {
@@ -568,7 +579,12 @@ $(function () {
 
   // clearing form data when offcanvas hidden
   offCanvasForm.on('hidden.bs.offcanvas', function () {
-    fv.resetForm(true);
+    //fv.resetForm(true);
+    $("#addNewUserForm").trigger('reset');
+    $('#user-role').select2({
+      placeholder: trans('lang.Select value'),
+      dropdownParent: $('#user-role').parent()
+    });
   });
 
   const phoneMaskList = document.querySelectorAll('.phone-mask');
