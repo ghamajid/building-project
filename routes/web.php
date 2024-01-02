@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\laravel_example\UserManagement;
 use App\Http\Controllers\users\UsersManagement;
 use App\Http\Controllers\roles\RolesManagement;
+use App\Http\Controllers\permissions\PermissionsManagement;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\dashboard\Crm;
 use App\Http\Controllers\language\LanguageController;
@@ -371,6 +372,10 @@ Route::middleware(['auth'])->group(function () {
   //roles routes
   Route::get('/management/roles', [RolesManagement::class, 'RoleManagement'])->name('management-roles');
   Route::resource('/roles-list', RolesManagement::class);
+
+  //permissions routes
+  Route::get('/management/permissions', [PermissionsManagement::class, 'PermissionManagement'])->name('management-permissions');
+  Route::resource('/permissions-list', PermissionsManagement::class);
 
 });
 Auth::routes();

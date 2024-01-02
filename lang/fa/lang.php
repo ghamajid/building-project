@@ -56,4 +56,10 @@ return [
   "Sign in"=> "ورود",
   "Remember Me"=> "مرا به خاطر بسپار",
   "Forgot Password"=> "فراموشی گذرواژه",
+  "Permissions Management"=> "مدیریت دسترسی ها",
+  "Permission Name"=> "نام دسترسی",
+  "Add Permission"=> "افزودن دسترسی",
+  "Add New Permission"=> "افزودن دسترسی",
+  "Edit Permission"=> "ویرایش دسترسی",
+  "No data available in table"=> "داده ای وجود ندارد",
 ];

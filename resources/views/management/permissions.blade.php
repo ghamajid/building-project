@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', __('lang.Roles Management'))
+@section('title', __('lang.Permissions Management'))
 
 @section('vendor-style')
   <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}">
@@ -25,23 +25,23 @@
 @endsection
 
 @section('page-script')
-  <script src="{{asset('js/role-management.js')}}"></script>
+  <script src="{{asset('js/permission-management.js')}}"></script>
 @endsection
 
 @section('content')
 
-  <!-- Roles List Table -->
+  <!-- Permissions List Table -->
   <div class="card">
     <div class="card-header">
-      <h5 class="card-title mb-0">{{__('lang.Roles Management')}}</h5>
+      <h5 class="card-title mb-0">{{__('lang.Permissions Management')}}</h5>
     </div>
     <div class="card-datatable table-responsive">
-      <table class="datatables-roles table">
+      <table class="datatables-permissions table">
         <thead class="border-top">
         <tr>
           <th></th>
           <th>{{__('lang.Row')}}</th>
-          <th>{{__('lang.Role Name')}}</th>
+          <th>{{__('lang.Permission Name')}}</th>
           <th>{{__('lang.Action')}}</th>
         </tr>
         </thead>
@@ -50,27 +50,15 @@
     <!-- Offcanvas to add new user -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddRole" aria-labelledby="offcanvasAddRoleLabel">
       <div class="offcanvas-header">
-        <h5 id="offcanvasAddRoleLabel" class="offcanvas-title">{{__('lang.Add Role')}}</h5>
+        <h5 id="offcanvasAddRoleLabel" class="offcanvas-title">{{__('lang.Add Permission')}}</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0">
         <form class="add-new-user pt-0" id="addNewRoleForm">
           <input type="hidden" name="id" id="user_id">
           <div class="mb-3">
-            <label class="form-label" for="add-name">{{__('lang.Role Name')}}</label>
+            <label class="form-label" for="add-name">{{__('lang.Permission Name')}}</label>
             <input type="text" class="form-control export_date" id="add-name" name="name"/>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="role_permission">{{__('lang.Role Permission')}}</label>
-            <div class="select2-primary">
-              <select id="role_permission" class="form-select form-select select2" name="permissions" multiple>
-                @if($permissions)
-                  @foreach($permissions as $permission)
-                    <option value="{{$permission->id}}">{{$permission->name}}</option>
-                  @endforeach
-                @endif
-              </select>
-            </div>
           </div>
           <div style="padding-top:200px">
              <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">{{__('lang.Save')}}</button>

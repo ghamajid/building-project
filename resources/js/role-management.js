@@ -119,7 +119,8 @@ $(function () {
         paginate: {
           previous: '<span class="ti ti-chevron-right"></span>',
           next: '<span class="ti ti-chevron-left"></span>'
-        }
+        },
+        emptyTable: trans('lang.No data available in table'),
       },
       // Buttons with Dropdown
       buttons: [

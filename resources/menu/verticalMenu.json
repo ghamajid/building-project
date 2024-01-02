@@ -26,8 +26,8 @@
         },
         {
           "name": "lang.Permissions",
-          "url": "app/access-permission",
-          "slug": "app-access-permission"
+          "url": "management/permissions",
+          "slug": "management-permissions"
         }
       ]
     }

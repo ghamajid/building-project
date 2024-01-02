@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\roles;
+namespace App\Http\Controllers\permissions;
 
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
-use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
 
-class RolesManagement extends Controller
+class PermissionsManagement extends Controller
 {
   /**
    * Redirect to user-management view.
    *
    */
-  public function RoleManagement()
+  public function PermissionManagement()
   {
-    $permissions = Permission::all();
-    return view('management.roles',['permissions'=> $permissions]);
+    return view('management.permissions');
   }
 
   /**
@@ -28,6 +26,7 @@ class RolesManagement extends Controller
    */
   public function index(Request $request)
   {
+
     $columns = [
       1 => 'id',
       2 => 'name',
@@ -35,7 +34,7 @@ class RolesManagement extends Controller
 
     $search = [];
 
-    $totalData = Role::count();
+    $totalData = Permission::count();
 
     $totalFiltered = $totalData;
 
@@ -45,35 +44,35 @@ class RolesManagement extends Controller
     $dir = $request->input('order.0.dir');
 
     if (empty($request->input('search.value'))) {
-      $roles = Role::offset($start)
+      $permissions = Permission::offset($start)
         ->limit($limit)
         ->orderBy($order, $dir)
         ->get();
     } else {
       $search = $request->input('search.value');
 
-      $roles = Role::where('id', 'LIKE', "%{$search}%")
+      $permissions = Permission::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
         ->offset($start)
         ->limit($limit)
         ->orderBy($order, $dir)
         ->get();
 
-      $totalFiltered = Role::where('id', 'LIKE', "%{$search}%")
+      $totalFiltered = Permission::where('id', 'LIKE', "%{$search}%")
         ->orWhere('name', 'LIKE', "%{$search}%")
         ->count();
     }
 
     $data = [];
 
-    if (!empty($roles)) {
+    if (!empty($permissions)) {
       // providing a dummy id instead of database ids
       $ids = $start;
 
-      foreach ($roles as $role) {
-        $nestedData['id'] = $role->id;
+      foreach ($permissions as $permission) {
+        $nestedData['id'] = $permission->id;
         $nestedData['fake_id'] = ++$ids;
-        $nestedData['name'] = $role->name;
+        $nestedData['name'] = $permission->name;
 
         $data[] = $nestedData;
       }
@@ -105,21 +104,20 @@ class RolesManagement extends Controller
    */
   public function store(Request $request)
   {
-    $roleID = $request->id;
-    $roleName = Role::where('name', $request->name)->first();
-    if (empty($roleName)) {
-      $role = Role::updateOrCreate(
-        ['id' => $roleID],
+    $permissionID = $request->id;
+    $permissionName = Permission::where('name', $request->name)->first();
+    if (empty($permissionName)) {
+      $permissions = Permission::updateOrCreate(
+        ['id' => $permissionID],
         ['name' => $request->name, 'guard_name'=>config('auth.defaults.guard')]
       );
-      $role->syncPermissions($request->get('permissions'));
     }else {
       // user already exist
       return response()->json(['message' => "already exits"], 422);
     }
 
-    if($role)
-      return response()->json(($roleID)?'Updated':'Created');
+    if($permissions)
+      return response()->json(($permissionID)?'Updated':'Created');
     else
       return response()->json(['message' => "server error"], 500);
   }
@@ -145,8 +143,9 @@ class RolesManagement extends Controller
   {
     $where = ['id' => $id];
 
-    $role = Role::where($where)->with('permissions')->first();
-    return response()->json($role);
+    $permissions = Permission::where($where)->first();
+
+    return response()->json($permissions);
   }
 
   /**
@@ -168,6 +167,6 @@ class RolesManagement extends Controller
    */
   public function destroy($id)
   {
-    $roles = Role::where('id', $id)->delete();
+    $permissions = Permission::where('id', $id)->delete();
   }
 }
