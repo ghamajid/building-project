@@ -13,4 +13,24 @@ class Role extends SpatieRole
   protected $fillable = [
     'name','guard_name'
   ];
+
+  function permissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  {
+    return $this->belongsToMany(
+      Permission::class,
+      'role_has_permissions',
+      'role_id',
+      'permission_id'
+    );
+  }
+
+  function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+  {
+    return $this->belongsToMany(
+      User::class,
+      'role_user',
+      'role_id',
+      'user_id'
+    );
+  }
 }

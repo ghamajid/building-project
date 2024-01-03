@@ -335,22 +335,33 @@ $(function () {
           url: `${baseUrl}roles-list/${role_id}`,
           success: function () {
             dt_role.draw();
+            // success sweetalert
+            Swal.fire({
+              icon: 'success',
+              title: trans('lang.Deleted')+'!',
+              text: trans('lang.The Record has been deleted'),
+              confirmButtonText: trans('lang.Submit'),
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
           },
           error: function (error) {
-            console.log(error);
+            console.log(JSON.parse(error.responseText).message);
+            // success sweetalert
+            Swal.fire({
+              icon: 'error',
+              title: trans('lang.Deleted')+'!',
+              text: trans('validation.'+JSON.parse(error.responseText).message),
+              confirmButtonText: trans('lang.Submit'),
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
           }
         });
 
-        // success sweetalert
-        Swal.fire({
-          icon: 'success',
-          title: trans('lang.Deleted')+'!',
-          text: trans('lang.The Record has been deleted'),
-          confirmButtonText: trans('lang.Submit'),
-          customClass: {
-            confirmButton: 'btn btn-success'
-          }
-        });
+
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire({
           title: trans('lang.Cancelled'),
@@ -381,7 +392,16 @@ $(function () {
     $.get(`${baseUrl}roles-list\/${role_id}\/edit`, function (data) {
       $('#role_id').val(data.id);
       $('#add-name').val(data.name);
-      $('#role_permission').val(data.permissions);
+      if(data.permissions.length){
+        let param = [];
+        data.permissions.forEach(function (arrayItem) {
+          param.push(arrayItem.id);
+        });
+        $('#role_permission').val(param).select2({
+          placeholder: trans('lang.Select value'),
+          dropdownParent: $('#role_permission').parent()
+        });
+      }
     });
   });
 
@@ -471,7 +491,13 @@ $(function () {
 
   // clearing form data when offcanvas hidden
   offCanvasForm.on('hidden.bs.offcanvas', function () {
-    fv.resetForm(true);
+    //fv.resetForm(true);
+
+    $("#addNewRoleForm").trigger('reset');
+    $('#role_permission').select2({
+      placeholder: trans('lang.Select value'),
+      dropdownParent: $('#role_permission').parent()
+    });
   });
 
   const phoneMaskList = document.querySelectorAll('.phone-mask');

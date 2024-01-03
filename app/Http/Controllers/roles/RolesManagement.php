@@ -107,12 +107,23 @@ class RolesManagement extends Controller
   {
     $roleID = $request->id;
     $roleName = Role::where('name', $request->name)->first();
-    if (empty($roleName)) {
+    if (empty($roleName) || $roleID) {
       $role = Role::updateOrCreate(
         ['id' => $roleID],
         ['name' => $request->name, 'guard_name'=>config('auth.defaults.guard')]
       );
-      $role->syncPermissions($request->get('permissions'));
+
+      //Remove permission assign to role
+      $permissions=$role->permissions()->pluck('name')->toArray();
+      if($permissions){
+        foreach($permissions as $item){
+          $role->revokePermissionTo($item);
+        }
+      }
+
+      //Add permission assign to role
+      $permissions = Permission::whereIn('id',$request->get('permissions'))->pluck('name');
+      $role->syncPermissions($permissions);
     }else {
       // user already exist
       return response()->json(['message' => "already exits"], 422);
@@ -168,6 +179,22 @@ class RolesManagement extends Controller
    */
   public function destroy($id)
   {
-    $roles = Role::where('id', $id)->delete();
+    $roles=Role::find($id);
+    if(!$roles->users->count()){
+      $permissions=$roles->permissions()->pluck('name')->toArray();
+      if(count($permissions) > 0){
+        foreach($permissions as $item){
+          $roles->revokePermissionTo($item);
+        }
+      }
+      $roles->delete();
+      return response()->json(['message' => "deleted"], 200);
+    }else{
+      return response()->json(['message' => "assign_user"], 500);
+    }
+
+   /* if($roles){
+
+    }*/
   }
 }

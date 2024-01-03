@@ -14,70 +14,25 @@ document.addEventListener('DOMContentLoaded', function (e) {
           username: {
             validators: {
               notEmpty: {
-                message: 'Please enter username'
+                message: trans('validation.username_re')
               },
               stringLength: {
                 min: 6,
-                message: 'Username must be more than 6 characters'
-              }
-            }
-          },
-          email: {
-            validators: {
-              notEmpty: {
-                message: 'Please enter your email'
-              },
-              emailAddress: {
-                message: 'Please enter valid email address'
-              }
-            }
-          },
-          'email-username': {
-            validators: {
-              notEmpty: {
-                message: 'Please enter email / username'
-              },
-              stringLength: {
-                min: 6,
-                message: 'Username must be more than 6 characters'
+                message: trans('validation.username_len')
               }
             }
           },
           password: {
             validators: {
               notEmpty: {
-                message: 'Please enter your password'
+                message: trans('validation.password_re')
               },
               stringLength: {
                 min: 6,
-                message: 'Password must be more than 6 characters'
+                message: trans('validation.password_len')
               }
             }
           },
-          'confirm-password': {
-            validators: {
-              notEmpty: {
-                message: 'Please confirm password'
-              },
-              identical: {
-                compare: function () {
-                  return formAuthentication.querySelector('[name="password"]').value;
-                },
-                message: 'The password and its confirm are not the same'
-              },
-              stringLength: {
-                min: 6,
-                message: 'Password must be more than 6 characters'
-              }
-            }
-          },
-          terms: {
-            validators: {
-              notEmpty: {
-                message: 'Please agree terms & conditions'
-              }
-            }
-          }
         },
         plugins: {
           trigger: new FormValidation.plugins.Trigger(),

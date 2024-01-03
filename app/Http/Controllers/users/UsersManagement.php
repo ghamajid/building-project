@@ -130,7 +130,7 @@ class UsersManagement extends Controller
   {
     $userID = $request->id;
     $userEmail = User::where('email', $request->email)->first();
-    if (empty($userEmail)) {
+    if (empty($userEmail) || $userID) {
       if(empty($request->password)){
         $user = User::updateOrCreate(
           ['id' => $userID],

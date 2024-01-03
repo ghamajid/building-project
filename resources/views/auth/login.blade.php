@@ -62,11 +62,10 @@
             <div class="mb-3 ">
               <label for="email" class="form-label">{{__('lang.Username')}}</label>
               <input type="text" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}"
-                     value="{{$username}}" id="email" name="username" placeholder="Enter username" autofocus>
+                     value="{{$username}}" id="email" name="username" autofocus>
               @if ($errors->has('username'))
                 <span class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-
-                <div data-field="username">{{ $errors->first('username') }}</div>
+                <div data-field="username">{{ __('validation.'.$errors->first('username')) }}</div>
               </span>
               @endif
             </div>
@@ -81,7 +80,6 @@
                 <input type="password" id="password"
                        class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{$password}}"
                        name="password"
-                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                        aria-describedby="password"/>
                 <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
               </div>

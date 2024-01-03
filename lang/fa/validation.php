@@ -150,6 +150,11 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
+    'username_re' => 'نام کاربری را وارد کنید',
+    'password_re' => 'گذرواژه را وارد کنید',
+    'password_len' => 'گذرواژه باید بیشتر از 6 کاراکتر باشد',
+    'These credentials do not match our records.' => 'اطلاعات وارد شده با سوابق ما مطابقت ندارد',
+    'assign_user' => 'این نقش به کاربری اختصاص داده شده و قابل حذف نیست .',
 
     /*
     |--------------------------------------------------------------------------

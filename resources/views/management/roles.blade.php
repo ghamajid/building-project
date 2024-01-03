@@ -47,15 +47,15 @@
         </thead>
       </table>
     </div>
-    <!-- Offcanvas to add new user -->
+    <!-- Offcanvas to add new role -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddRole" aria-labelledby="offcanvasAddRoleLabel">
       <div class="offcanvas-header">
         <h5 id="offcanvasAddRoleLabel" class="offcanvas-title">{{__('lang.Add Role')}}</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0">
-        <form class="add-new-user pt-0" id="addNewRoleForm">
-          <input type="hidden" name="id" id="user_id">
+        <form class="add-new-role pt-0" id="addNewRoleForm">
+          <input type="hidden" name="id" id="role_id">
           <div class="mb-3">
             <label class="form-label" for="add-name">{{__('lang.Role Name')}}</label>
             <input type="text" class="form-control export_date" id="add-name" name="name"/>
@@ -63,7 +63,7 @@
           <div class="mb-3">
             <label class="form-label" for="role_permission">{{__('lang.Role Permission')}}</label>
             <div class="select2-primary">
-              <select id="role_permission" class="form-select form-select select2" name="permissions" multiple>
+              <select id="role_permission" class="form-select form-select select2" name="permissions[]" multiple>
                 @if($permissions)
                   @foreach($permissions as $permission)
                     <option value="{{$permission->id}}">{{$permission->name}}</option>
