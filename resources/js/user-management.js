@@ -444,6 +444,9 @@ $(function () {
       $('#user_id').val(data.id);
       $('#add-user-fullname').val(data.name);
       $('#add-user-email').val(data.email);
+      $('#add-user-contact').val(data.contact);
+      $('#add-user-password').val('');
+      $('#add-user-confirmPassword').val('');
       $('#add-username').val(data.username);
       if(data.roles.length){
         let param = [];
@@ -544,6 +547,8 @@ $(function () {
       autoFocus: new FormValidation.plugins.AutoFocus()
     }
   }).on('core.form.valid', function () {
+    $('#submit_loading').removeClass('d-none')
+    $('#submit').addClass('d-none')
     // adding or updating user when form successfully validate
     $.ajax({
       data: $('#addNewUserForm').serialize(),
@@ -552,7 +557,8 @@ $(function () {
       success: function (status) {
         dt_user.draw();
         offCanvasForm.offcanvas('hide');
-
+        $('#submit_loading').addClass('d-none')
+        $('#submit').removeClass('d-none')
         // sweetalert
         Swal.fire({
           icon: 'success',
@@ -565,6 +571,8 @@ $(function () {
         });
       },
       error: function (err) {
+        $('#submit_loading').addClass('d-none')
+        $('#submit').removeClass('d-none')
         //offCanvasForm.offcanvas('hide');
         Swal.fire({
           title: trans('lang.Duplicate Entry')+'!',

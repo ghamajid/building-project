@@ -106,7 +106,7 @@ class PermissionsManagement extends Controller
   {
     $permissionID = $request->id;
     $permissionName = Permission::where('name', $request->name)->first();
-    if (empty($permissionName)) {
+    if (empty($permissionName) || $permissionID) {
       $permissions = Permission::updateOrCreate(
         ['id' => $permissionID],
         ['name' => $request->name, 'guard_name'=>config('auth.defaults.guard')]
@@ -167,6 +167,13 @@ class PermissionsManagement extends Controller
    */
   public function destroy($id)
   {
-    $permissions = Permission::where('id', $id)->delete();
+    $permission = Permission::with('roles')->where('id', $id)->first();
+    if(!$permission->roles->count()){
+      $permissions = Permission::where('id', $id)->delete();
+      if($permissions)
+        return response()->json(['message' => "deleted"], 200);
+    }else{
+      return response()->json(['message' => "assign_role"], 500);
+    }
   }
 }

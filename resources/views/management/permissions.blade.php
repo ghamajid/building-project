@@ -48,14 +48,14 @@
       </table>
     </div>
     <!-- Offcanvas to add new user -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddRole" aria-labelledby="offcanvasAddRoleLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddPermission" aria-labelledby="offcanvasAddPermissionLabel">
       <div class="offcanvas-header">
-        <h5 id="offcanvasAddRoleLabel" class="offcanvas-title">{{__('lang.Add Permission')}}</h5>
+        <h5 id="offcanvasAddPermissionLabel" class="offcanvas-title">{{__('lang.Add Permission')}}</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body mx-0 flex-grow-0">
-        <form class="add-new-user pt-0" id="addNewRoleForm">
-          <input type="hidden" name="id" id="user_id">
+        <form class="add-new-user pt-0" id="addNewPermissionForm">
+          <input type="hidden" name="id" id="permission_id">
           <div class="mb-3">
             <label class="form-label" for="add-name">{{__('lang.Permission Name')}}</label>
             <input type="text" class="form-control export_date" id="add-name" name="name"/>

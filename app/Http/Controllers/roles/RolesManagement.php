@@ -122,8 +122,10 @@ class RolesManagement extends Controller
       }
 
       //Add permission assign to role
-      $permissions = Permission::whereIn('id',$request->get('permissions'))->pluck('name');
-      $role->syncPermissions($permissions);
+      if(count($request->get('permissions'))){
+        $permissions = Permission::whereIn('id',$request->get('permissions'))->pluck('name');
+        $role->syncPermissions($permissions);
+      }
     }else {
       // user already exist
       return response()->json(['message' => "already exits"], 422);

@@ -7,10 +7,10 @@
 // Datatable (jquery)
 $(function () {
   // Variable declaration for table
-  var dt_role_table = $('.datatables-permissions'),
+  var dt_permission_table = $('.datatables-permissions'),
     select2 = $('.select2'),
-    roleView = baseUrl + 'app/user/view/account',
-    offCanvasForm = $('#offcanvasAddRole');
+    permissionView = baseUrl + 'app/user/view/account',
+    offCanvasForm = $('#offcanvasAddPermission');
 
   /*if (select2.length) {
     var $this = select2;
@@ -37,8 +37,8 @@ $(function () {
   });
 
   // Permissions datatable
-  if (dt_role_table.length) {
-    var dt_role = dt_role_table.DataTable({
+  if (dt_permission_table.length) {
+    var dt_permission = dt_permission_table.DataTable({
       processing: true,
       serverSide: true,
       ajax: {
@@ -87,12 +87,12 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-block text-nowrap">' +
-              `<button class="btn btn-sm btn-icon edit-record" data-id="${full['id']}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddRole"><i class="ti ti-edit"></i></button>` +
+              `<button class="btn btn-sm btn-icon edit-record" data-id="${full['id']}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddPermission"><i class="ti ti-edit"></i></button>` +
               `<button class="btn btn-sm btn-icon delete-record" data-id="${full['id']}"><i class="ti ti-trash"></i></button>` +
               '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>' +
               '<div class="dropdown-menu dropdown-menu-end m-0">' +
               '<a href="' +
-              roleView +
+              permissionView +
               '" class="dropdown-item">View</a>' +
               '<a href="javascript:;" class="dropdown-item">Suspend</a>' +
               '</div>' +
@@ -264,7 +264,7 @@ $(function () {
           className: 'add-new btn btn-primary',
           attr: {
             'data-bs-toggle': 'offcanvas',
-            'data-bs-target': '#offcanvasAddRole'
+            'data-bs-target': '#offcanvasAddPermission'
           }
         }
       ],
@@ -306,7 +306,7 @@ $(function () {
 
   // Delete Record
   $(document).on('click', '.delete-record', function () {
-    var role_id = $(this).data('id'),
+    var permission_id = $(this).data('id'),
       dtrModal = $('.dtr-bs-modal.show');
 
     // hide responsive modal in small screen
@@ -332,23 +332,30 @@ $(function () {
         // delete the data
         $.ajax({
           type: 'DELETE',
-          url: `${baseUrl}permissions-list/${role_id}`,
+          url: `${baseUrl}permissions-list/${permission_id}`,
           success: function () {
-            dt_role.draw();
+            dt_permission.draw();
+            // success sweetalert
+            Swal.fire({
+              icon: 'success',
+              title: trans('lang.Deleted')+'!',
+              text: trans('lang.The Record has been deleted'),
+              confirmButtonText: trans('lang.Submit'),
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
           },
           error: function (error) {
-            console.log(error);
-          }
-        });
-
-        // success sweetalert
-        Swal.fire({
-          icon: 'success',
-          title: trans('lang.Deleted')+'!',
-          text: trans('lang.The Record has been deleted'),
-          confirmButtonText: trans('lang.Submit'),
-          customClass: {
-            confirmButton: 'btn btn-success'
+            Swal.fire({
+              icon: 'error',
+              title: trans('lang.Deleted')+'!',
+              text: trans('validation.'+JSON.parse(error.responseText).message),
+              confirmButtonText: trans('lang.Submit'),
+              customClass: {
+                confirmButton: 'btn btn-success'
+              }
+            });
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -366,7 +373,7 @@ $(function () {
 
   // edit record
   $(document).on('click', '.edit-record', function () {
-    var role_id = $(this).data('id'),
+    var permission_id = $(this).data('id'),
       dtrModal = $('.dtr-bs-modal.show');
 
     // hide responsive modal in small screen
@@ -375,20 +382,20 @@ $(function () {
     }
 
     // changing the title of offcanvas
-    $('#offcanvasAddRoleLabel').html(trans('lang.Edit Permission'));
+    $('#offcanvasAddPermissionLabel').html(trans('lang.Edit Permission'));
 
     // get data
-    $.get(`${baseUrl}permissions-list\/${role_id}\/edit`, function (data) {
-      $('#role_id').val(data.id);
+    $.get(`${baseUrl}permissions-list\/${permission_id}\/edit`, function (data) {
+      $('#permission_id').val(data.id);
       $('#add-name').val(data.name);
-      $('#role_permission').val(data.permissions);
+      $('#permission_permission').val(data.permissions);
     });
   });
 
   // changing the title
   $('.add-new').on('click', function () {
-    $('#role_id').val(''); //reseting input field
-    $('#offcanvasAddRoleLabel').html(trans("lang.Add Permission"));
+    $('#permission_id').val(''); //reseting input field
+    $('#offcanvasAddPermissionLabel').html(trans("lang.Add Permission"));
   });
 
   // Filter form control to default size
@@ -399,10 +406,10 @@ $(function () {
   }, 300);
 
   // validating form and updating permission's data
-  const addNewRoleForm = document.getElementById('addNewRoleForm');
+  const addNewPermissionForm = document.getElementById('addNewPermissionForm');
 
   // permission form validation
-  const fv = FormValidation.formValidation(addNewRoleForm, {
+  const fv = FormValidation.formValidation(addNewPermissionForm, {
     fields: {
       name: {
         validators: {
@@ -430,11 +437,11 @@ $(function () {
   }).on('core.form.valid', function () {
     // adding or updating permission when form successfully validate
     $.ajax({
-      data: $('#addNewRoleForm').serialize(),
+      data: $('#addNewPermissionForm').serialize(),
       url: `${baseUrl}permissions-list`,
       type: 'POST',
       success: function (status) {
-        dt_role.draw();
+        dt_permission.draw();
         offCanvasForm.offcanvas('hide');
 
         // sweetalert

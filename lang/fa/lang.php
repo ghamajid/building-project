@@ -64,4 +64,5 @@ return [
   "Add New Permission"=> "افزودن دسترسی",
   "Edit Permission"=> "ویرایش دسترسی",
   "No data available in table"=> "داده ای وجود ندارد",
+  "Loading"=> "لطفا منتظر بمانید",
 ];

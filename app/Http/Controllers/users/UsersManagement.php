@@ -142,6 +142,7 @@ class UsersManagement extends Controller
           ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact,'status' => 1, 'email' => $request->email, 'password' => bcrypt($request->password)]
         );
       }
+      $user->syncRoles([]);
       if($request->roles && $user){
         foreach($request->roles as $role){
           $role = Role::find($role);

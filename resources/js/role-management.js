@@ -347,7 +347,7 @@ $(function () {
             });
           },
           error: function (error) {
-            console.log(JSON.parse(error.responseText).message);
+            //console.log(JSON.parse(error.responseText).message);
             // success sweetalert
             Swal.fire({
               icon: 'error',

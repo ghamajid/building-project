@@ -104,9 +104,13 @@
           </div>
           <div class="mb-3">
             <label class="form-label" for="add-user-confirmPassword">{{__('lang.Replay Password')}}</label>
-            <input type="password" id="add-user-confirmPassword" class="form-control" name="confirmPassword" />
+            <input type="password" id="add-user-confirmPassword" class="form-control" name="confirmPassword" autocomplete="off" />
           </div>
-          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">{{__('lang.Save')}}</button>
+          <button type="submit" id="submit" class="btn btn-primary me-sm-3 me-1 data-submit">{{__('lang.Save')}}</button>
+          <button class="btn btn-primary d-none" id="submit_loading" type="button" disabled>
+            <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
+            {{__('lang.Loading')}} ...
+          </button>
           <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">{{__('lang.Cancel')}}</button>
         </form>
       </div>
