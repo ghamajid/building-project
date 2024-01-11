@@ -124,36 +124,7 @@ class CostsConstructionController extends Controller
    */
   public function store(Request $request)
   {
-    $userID = $request->id;
-    $userEmail = User::where('email', $request->email)->first();
-    if (empty($userEmail) || $userID) {
-      if(empty($request->password)){
-        $user = User::updateOrCreate(
-          ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact,'status' => 1, 'email' => $request->email]
-        );
-      }else{
-        $user = User::updateOrCreate(
-          ['id' => $userID],
-          ['name' => $request->name, 'username' => $request->username, 'contact' => $request->contact,'status' => 1, 'email' => $request->email, 'password' => bcrypt($request->password)]
-        );
-      }
-      $user->syncRoles([]);
-      if($request->roles && $user){
-        foreach($request->roles as $role){
-          $role = Role::find($role);
-          $user->assignRole($role);
-        }
-      }
-    }else {
-      // user already exist
-      return response()->json(['message' => "already exits"], 422);
-    }
-
-    if($user)
-      return response()->json(($userID)?'Updated':'Created');
-    else
-      return response()->json(['message' => "server error"], 500);
+   dd($request->all());
   }
 
   /**

@@ -379,7 +379,8 @@ Route::middleware(['auth'])->group(function () {
   Route::resource('/permissions-list', PermissionsManagement::class);
 
   Route::group(['prefix'=>'construction','as'=>'construction.'], function(){
-    Route::get('/costs', [\App\Http\Controllers\construction\CostsConstructionController::class, 'CostConstruction'])->name('costs');
+    Route::get('/costs', [CostsConstructionController::class, 'CostConstruction'])->name('costs');
+    Route::post('/costs-insert', [CostsConstructionController::class, 'store'])->name('costs.insert');
   });
 });
 
