@@ -5,6 +5,7 @@ use App\Http\Controllers\laravel_example\UserManagement;
 use App\Http\Controllers\users\UsersManagement;
 use App\Http\Controllers\roles\RolesManagement;
 use App\Http\Controllers\permissions\PermissionsManagement;
+use App\Http\Controllers\construction\CostsConstructionController;
 use App\Http\Controllers\dashboard\Analytics;
 use App\Http\Controllers\dashboard\Crm;
 use App\Http\Controllers\language\LanguageController;
@@ -377,5 +378,9 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/management/permissions', [PermissionsManagement::class, 'PermissionManagement'])->name('management-permissions');
   Route::resource('/permissions-list', PermissionsManagement::class);
 
+  Route::group(['prefix'=>'construction','as'=>'construction.'], function(){
+    Route::get('/costs', [\App\Http\Controllers\construction\CostsConstructionController::class, 'CostConstruction'])->name('costs');
+  });
 });
+
 Auth::routes();

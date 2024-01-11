@@ -30,6 +30,18 @@
           "slug": "management-permissions"
         }
       ]
+    },
+    {
+      "name": "lang.Construction",
+      "icon": "menu-icon tf-icons ti ti-building-store",
+      "slug": "construction",
+      "submenu": [
+        {
+          "name": "lang.Costs",
+          "url": "construction/costs",
+          "slug": "construction.costs"
+        }
+      ]
     }
   ]
 }

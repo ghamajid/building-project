@@ -141,6 +141,7 @@ mix.js('resources/js/laravel-user-management.js', 'public/js/');
 mix.js('resources/js/user-management.js', 'public/js/');
 mix.js('resources/js/role-management.js', 'public/js/');
 mix.js('resources/js/permission-management.js', 'public/js/');
+mix.js('resources/js/construction/cost.js', 'public/js/construction/');
 
 mix.copy('node_modules/flag-icons/flags/1x1/*', 'public/assets/vendor/fonts/flags/1x1');
 mix.copy('node_modules/flag-icons/flags/4x3/*', 'public/assets/vendor/fonts/flags/4x3');
