@@ -381,6 +381,7 @@ Route::middleware(['auth'])->group(function () {
   Route::group(['prefix'=>'construction','as'=>'construction.'], function(){
     Route::get('/costs', [CostsConstructionController::class, 'CostConstruction'])->name('costs');
     Route::post('/costs-insert', [CostsConstructionController::class, 'store'])->name('costs.insert');
+    Route::post('/renewal-code-fetch', [CostsConstructionController::class, 'renewal_code_fetch'])->name('renewal.code.fetch');
   });
 });
 

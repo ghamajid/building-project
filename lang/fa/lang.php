@@ -130,7 +130,6 @@ return [
   "The price of each branch of water"=> "قیمت هر انشعاب آب",
   "The price of each branch of gas"=> "قیمت هر انشعاب گاز",
   "Elevator fee for each stop"=> "هزینه آسانسور برای هر توقف",
-
   "Price per cubic meter of concrete"=> "قیمت هر متر مکعب بتن",
   "Price per ton of sand"=> "قیمت هرتن ماسه",
   "The fee for each square meter of brickwork"=> "دستمزد اجرای هر متر مربع آجرکاری",
@@ -139,4 +138,5 @@ return [
   "The price per meter of roof isogam"=> "قیمت هر متر ایزوگام پشت بام",
   "Previous"=> "قبلی",
   "Next"=> "بعدی",
+  "Building renovation code"=> "کد نوسازی ساختمان",
 ];
