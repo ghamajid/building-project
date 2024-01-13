@@ -5,6 +5,8 @@ namespace App\Http\Controllers\construction;
 use App\Http\Controllers\Classes\simple_html_dom;
 use App\Http\Controllers\Controller;
 use App\Models\Price;
+use App\Models\Project;
+use App\Models\Regulation;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Request as Request_g;
@@ -225,7 +227,7 @@ class CostsConstructionController extends Controller
     $client = new Client([
       // Base URI is used with relative requests
       'verify' => false,
-      'timeout'  => 1000.0,
+      'timeout'  => 5000,
     ]);
     $headers = [
       'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -248,18 +250,18 @@ class CostsConstructionController extends Controller
     ];
     $options = [
       'form_params' => [
-        'nosaziCode1' => '0',
-        'nosaziCode2' => '0',
-        'nosaziCode3' => '0',
-        'nosaziCode4' => '4',
-        'nosaziCode5' => '3',
-        'nosaziCode6' => '2',
-        'nosaziCode7' => '1',
+        'nosaziCode1' => $request->renewal_code_1,
+        'nosaziCode2' => $request->renewal_code_2,
+        'nosaziCode3' => $request->renewal_code_3,
+        'nosaziCode4' => $request->renewal_code_4,
+        'nosaziCode5' => $request->renewal_code_5,
+        'nosaziCode6' => $request->renewal_code_6,
+        'nosaziCode7' => $request->renewal_code_7,
         'reportsRadio' => 'fshZabete',
         'SearchBtn' => 'جستجو'
       ]];
-    $request = new Request_g('POST', 'https://eservice.mashhad.ir/fa/page/341316', $headers);
-    $res = $client->sendAsync($request, $options)->wait();
+    $request_g = new Request_g('POST', 'https://eservice.mashhad.ir/fa/page/341316', $headers);
+    $res = $client->sendAsync($request_g, $options)->wait();
 
 
     $html = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
@@ -267,20 +269,45 @@ class CostsConstructionController extends Controller
     $html->load($res->getBody()->getContents(), true, true);
     //dd($res->getStatusCode());
     //dd($html->load($res->getBody()->getContents(), true, true));
-
-    foreach($html->find('div[id="__divBotDetail"] table') as $index=>$table) {
-      if($index == 1){
-        foreach ($table->find('tbody tr[class="list-even"]') as $list){
-          foreach ($list->find('td') as $index=>$td){
-            dd($td->innertext);
+    if(count($html->find('div[id="__divBotDetail"] table')) > 0){
+      //create user_id
+      $project = Project::where('user_id',Auth::id())->where('renewal_code',$request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1)->first();
+      if(!$project){
+        $project = new Project();
+      }
+      $project->title = Str::random(10);
+      $project->renewal_code = $request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1;
+      $project->user_id = Auth::id();
+      $project->save();
+      foreach($html->find('div[id="__divBotDetail"] table') as $index=>$table) {
+        if($index == 1){
+          Regulation::where('project_id',$project->id)->delete();
+          foreach ($table->find('tbody tr[class="list-even"]') as $list){
+            $regulation = new Regulation();
+            $regulation->project_id = $project->id;
+            foreach ($list->find('td') as $index=>$td){
+              if($index == 0){
+                $regulation->title = $td->innertext;
+              }
+              if($index == 1){
+                $regulation->unit = $td->innertext;
+              }
+              if($index == 2){
+                $regulation->amount = $td->innertext;
+              }
+              if($index == 3){
+                $regulation->description = $td->innertext;
+              }
+            }
+            $regulation->save();
           }
         }
+        /*if($a->innertext == 'دانلود آهنگ') {
+          $links[] = $a;
+        }*/
+
       }
-
-      /*if($a->innertext == 'دانلود آهنگ') {
-        $links[] = $a;
-      }*/
-
+      dd("1");
     }
 
   }

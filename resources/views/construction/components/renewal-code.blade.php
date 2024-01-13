@@ -10,25 +10,25 @@
         <label class="form-label" for="price_1">{{__('lang.Building renovation code')}}</label>
         <div class="input-group ">
           <input type="number" dir="ltr" tabindex="7" value="0" min="0" maxlength="5"
-                 class="form-control text-center p-0" name="renewal_code_7"/>
+                 class="form-control text-center p-0" name="renewal_code_1"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="6" value="0" min="0" maxlength="5"
-                 class="form-control text-center p-0" name="renewal_code_6"/>
+                 class="form-control text-center p-0" name="renewal_code_2"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="5" value="0" min="0" maxlength="3"
-                 class="form-control text-center p-0" name="renewal_code_5"/>
+                 class="form-control text-center p-0" name="renewal_code_3"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="4" value="" min="0" maxlength="5"
                  class="form-control text-center p-0" name="renewal_code_4"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="3" value="" min="0" maxlength="3"
-                 class="form-control text-center p-0" name="renewal_code_3"/>
+                 class="form-control text-center p-0" name="renewal_code_5"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="2" value="" min="0" maxlength="2"
-                 class="form-control text-center p-0" name="renewal_code_2"/>
+                 class="form-control text-center p-0" name="renewal_code_6"/>
           <span class="p-2"> - </span>
           <input type="number" dir="ltr" tabindex="1" value="" min="0" maxlength="2"
-                 class="form-control text-center p-0" name="renewal_code_1"/>
+                 class="form-control text-center p-0" name="renewal_code_7"/>
         </div>
         <div class="invalid-feedback invalid-message d-none">
           {{__('validation.required',['attribute' =>__('lang.Building renovation code')])}}
