@@ -788,8 +788,19 @@ $(function () {
           document.querySelector('.btn-next-renewal-code-disable').classList.add("d-none");
           // sweetalert
         },
-        error: function error(err) {
-
+        error: function error(error) {
+          console.log(error.responseText)
+          document.querySelector('.btn-next-renewal-code-active').classList.remove("d-none");
+          document.querySelector('.btn-next-renewal-code-disable').classList.add("d-none");
+          Swal.fire({
+            icon: 'error',
+            title: trans('lang.Building renovation code')+'!',
+            text: trans('lang.'+JSON.parse(error.responseText).message),
+            confirmButtonText: trans('lang.Submit'),
+            customClass: {
+              confirmButton: 'btn btn-success'
+            }
+          });
         }
       });
     });

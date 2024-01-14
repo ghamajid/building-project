@@ -24,12 +24,12 @@ class CostsConstructionController extends Controller
    */
   public function CostConstruction()
   {
-    $prices = Price::where('user_id',Auth::id())->get();
+    $prices = Price::where('user_id', Auth::id())->get();
     $arr = [];
-    foreach($prices as $price){
+    foreach ($prices as $price) {
       $arr[$price->name] = $price->price;
     }
-    return view('construction.costs',['prices'=> $arr]);
+    return view('construction.costs', ['prices' => $arr]);
   }
 
   /**
@@ -137,19 +137,19 @@ class CostsConstructionController extends Controller
    */
   public function store(Request $request)
   {
-   // dd($request->all());
-   //Price::where('user_id',Auth::id())->delete();
+    // dd($request->all());
+    //Price::where('user_id',Auth::id())->delete();
 
-   foreach($request->all() as $key=>$param){
-     $price = Price::where('user_id',Auth::id())->where('name',$key)->first();
-     if(!$price){
-       $price = new Price();
-     }
-     $price->name = $key;
-     $price->price = $param;
-     $price->user_id = Auth::id();
-     $price->save();
-   }
+    foreach ($request->all() as $key => $param) {
+      $price = Price::where('user_id', Auth::id())->where('name', $key)->first();
+      if (!$price) {
+        $price = new Price();
+      }
+      $price->name = $key;
+      $price->price = $param;
+      $price->user_id = Auth::id();
+      $price->save();
+    }
     return response()->json('Created');
 
   }
@@ -204,111 +204,113 @@ class CostsConstructionController extends Controller
 
   public function renewal_code_fetch(Request $request)
   {
-    //dd($request->all());
-   /* $response = Http::get('https://eservice.mashhad.ir/fa/page/341316', [
-      'name' => 'Taylor',
-      'page' => 1,
-    ]);*/
-
-   /* $client = new Client([
-      // Base URI is used with relative requests
-      'verify' => false,
-    ]);
-    $params = [
-      'query' => [
-        'option_1' => "asd",
-        'option_2' => "string"
-      ]
-    ];
-    $response = $client->request('GET','https://eservice.mashhad.ir/fa/page/341316',$params);
-
-    dd($response->getBody());*/
-
-    $client = new Client([
-      // Base URI is used with relative requests
-      'verify' => false,
-      'timeout'  => 5000,
-    ]);
-    $headers = [
-      'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-      'Accept-Language' => 'en-US,en;q=0.9,fa;q=0.8',
-      'Cache-Control' => 'max-age=0',
-      'Connection' => 'keep-alive',
-      'Content-Type' => 'application/x-www-form-urlencoded',
-      'Cookie' => 'eservice_mashhad_ir_analytic_key=822ad60a623f85dda6f48c7719e9d502; eservice_mashhad_ir_analytic_key=1868702ad1a25dd77b8bd6e996221e5c; SAMANPORTALSID_mashhadir=l0ft8h5i6datftdco31lcjq233; cookiesession1=678B2880EEC5CC386D3C3A056E3B3A70; SCREEN_SIZE=1920x1080; cookiesession1=678B2880E661567300E1AFFD7FA03AD1',
-      'Origin' => 'https://eservice.mashhad.ir',
-      'Referer' => 'https://eservice.mashhad.ir/fa/page/341316',
-      'Sec-Fetch-Dest' => 'document',
-      'Sec-Fetch-Mode' => 'navigate',
-      'Sec-Fetch-Site' => 'same-origin',
-      'Sec-Fetch-User' => '?1',
-      'Upgrade-Insecure-Requests' => '1',
-      'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'sec-ch-ua' => '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
-      'sec-ch-ua-mobile' => '?0',
-      'sec-ch-ua-platform' => '"Windows"'
-    ];
-    $options = [
-      'form_params' => [
-        'nosaziCode1' => $request->renewal_code_1,
-        'nosaziCode2' => $request->renewal_code_2,
-        'nosaziCode3' => $request->renewal_code_3,
-        'nosaziCode4' => $request->renewal_code_4,
-        'nosaziCode5' => $request->renewal_code_5,
-        'nosaziCode6' => $request->renewal_code_6,
-        'nosaziCode7' => $request->renewal_code_7,
-        'reportsRadio' => 'fshZabete',
-        'SearchBtn' => 'جستجو'
-      ]];
-    $request_g = new Request_g('POST', 'https://eservice.mashhad.ir/fa/page/341316', $headers);
-    $res = $client->sendAsync($request_g, $options)->wait();
+    ini_set('max_execution_time', 3600); // 3600 seconds = 60 minutes
+    set_time_limit(3600);
+    try {
+      $client = new Client([
+        // Base URI is used with relative requests
+        'verify' => false,
+        'timeout'  => 5000,
+      ]);
+      $headers = [
+        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language' => 'en-US,en;q=0.9,fa;q=0.8',
+        'Cache-Control' => 'max-age=0',
+        'Connection' => 'keep-alive',
+        'Content-Type' => 'application/x-www-form-urlencoded',
+        'Cookie' => 'eservice_mashhad_ir_analytic_key=822ad60a623f85dda6f48c7719e9d502; eservice_mashhad_ir_analytic_key=1868702ad1a25dd77b8bd6e996221e5c; SAMANPORTALSID_mashhadir=l0ft8h5i6datftdco31lcjq233; cookiesession1=678B2880EEC5CC386D3C3A056E3B3A70; SCREEN_SIZE=1920x1080; cookiesession1=678B2880E661567300E1AFFD7FA03AD1',
+        'Origin' => 'https://eservice.mashhad.ir',
+        'Referer' => 'https://eservice.mashhad.ir/fa/page/341316',
+        'Sec-Fetch-Dest' => 'document',
+        'Sec-Fetch-Mode' => 'navigate',
+        'Sec-Fetch-Site' => 'same-origin',
+        'Sec-Fetch-User' => '?1',
+        'Upgrade-Insecure-Requests' => '1',
+        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'sec-ch-ua' => '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+        'sec-ch-ua-mobile' => '?0',
+        'sec-ch-ua-platform' => '"Windows"'
+      ];
+      $options = [
+        'form_params' => [
+          'nosaziCode1' => $request->renewal_code_1,
+          'nosaziCode2' => $request->renewal_code_2,
+          'nosaziCode3' => $request->renewal_code_3,
+          'nosaziCode4' => $request->renewal_code_4,
+          'nosaziCode5' => $request->renewal_code_5,
+          'nosaziCode6' => $request->renewal_code_6,
+          'nosaziCode7' => $request->renewal_code_7,
+          'reportsRadio' => 'fshZabete',
+          'SearchBtn' => 'جستجو'
+        ]];
+      $request_g = new Request_g('POST', 'https://eservice.mashhad.ir/fa/page/341316', $headers);
+      $res = $client->sendAsync($request_g, $options)->wait();
 
 
-    $html = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
+      $html = new simple_html_dom(null, true, true, DEFAULT_TARGET_CHARSET, true, DEFAULT_BR_TEXT, DEFAULT_SPAN_TEXT);
 
-    $html->load($res->getBody()->getContents(), true, true);
-    //dd($res->getStatusCode());
-    //dd($html->load($res->getBody()->getContents(), true, true));
-    if(count($html->find('div[id="__divBotDetail"] table')) > 0){
-      //create user_id
-      $project = Project::where('user_id',Auth::id())->where('renewal_code',$request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1)->first();
-      if(!$project){
-        $project = new Project();
-      }
-      $project->title = Str::random(10);
-      $project->renewal_code = $request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1;
-      $project->user_id = Auth::id();
-      $project->save();
-      foreach($html->find('div[id="__divBotDetail"] table') as $index=>$table) {
-        if($index == 1){
-          Regulation::where('project_id',$project->id)->delete();
-          foreach ($table->find('tbody tr[class="list-even"]') as $list){
-            $regulation = new Regulation();
-            $regulation->project_id = $project->id;
-            foreach ($list->find('td') as $index=>$td){
-              if($index == 0){
-                $regulation->title = $td->innertext;
-              }
-              if($index == 1){
-                $regulation->unit = $td->innertext;
-              }
-              if($index == 2){
-                $regulation->amount = $td->innertext;
-              }
-              if($index == 3){
-                $regulation->description = $td->innertext;
-              }
-            }
-            $regulation->save();
+      $html->load($res->getBody()->getContents(), true, true);
+      //dd($res->getStatusCode());
+      //dd($html->load($res->getBody()->getContents(), true, true));
+      if(count($html->find('div[id="__divBotDetail"] table')) > 0){
+        //create project
+        $project = Project::where('user_id',Auth::id())->where('renewal_code',$request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1)->first();
+        if(!$project){
+          $project = new Project();
+        }
+        $project->title = Str::random(10);
+        $project->renewal_code = $request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1;
+        $project->user_id = Auth::id();
+        $project->save();
+
+        foreach($html->find('div[id="fshMainDiv"] table[class="list"] tr[class="list-even"] td[class="list-normal-first"]') as $index=>$param) {
+          if($index == 0){
+            $amount = explode(':',$param->innertext);
+            $amount_s = str_replace(' ', '', $amount[1]);
+            $project->approved_area = $amount_s;
+            $project->save();
           }
         }
-        /*if($a->innertext == 'دانلود آهنگ') {
-          $links[] = $a;
-        }*/
 
+
+        foreach($html->find('div[id="__divBotDetail"] table') as $index=>$table) {
+          if($index == 1){
+            Regulation::where('project_id',$project->id)->delete();
+            foreach ($table->find('tbody tr[class="list-even"]') as $list){
+              //create regulation
+              $regulation = new Regulation();
+              $regulation->project_id = $project->id;
+              foreach ($list->find('td') as $index=>$td){
+                if($index == 0){
+                  $regulation->title = $td->innertext;
+                }
+                if($index == 1){
+                  $regulation->unit = $td->innertext;
+                }
+                if($index == 2){
+                  $regulation->amount = $td->innertext;
+                }
+                if($index == 3){
+                  $regulation->description = $td->innertext;
+                }
+              }
+              $regulation->save();
+            }
+          }
+          /*if($a->innertext == 'دانلود آهنگ') {
+            $links[] = $a;
+          }*/
+
+        }
+        $arr_p = [];
+        $arr_p['regulation'] = Regulation::where('project_id',$project->id)->where('title','زیربنا در طبقات')->get()->toArray();
+        $arr_p['project'] = $project->toArray();
+        return response()->json($arr_p);
       }
-      dd("1");
+    } catch (\Exception $e) {
+      return response()->json(['message' => "Server error"], 500);
     }
+
 
   }
 }

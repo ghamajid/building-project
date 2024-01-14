@@ -139,4 +139,5 @@ return [
   "Previous"=> "قبلی",
   "Next"=> "بعدی",
   "Building renovation code"=> "کد نوسازی ساختمان",
+  "Server error"=> "نرم افزار به پورتال شهرداری متصل نشد . دوباره تلاش کنید!",
 ];

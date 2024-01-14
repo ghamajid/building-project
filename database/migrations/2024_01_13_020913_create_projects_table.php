@@ -20,6 +20,7 @@ return new class extends Migration
               ->references('id') // user id
               ->on('users')
               ->onDelete('cascade');
+            $table->float('approved_area')->nullable();;
             $table->timestamps();
         });
     }
