@@ -79,7 +79,7 @@ $(function () {
     var renewal_code = wizardIcons.querySelector('#renewal-code');
 
     const iconsStepper = new Stepper(wizardIcons, {
-      linear: true
+      linear: false
     });
 
     const FormPrices = FormValidation.formValidation(prices, {

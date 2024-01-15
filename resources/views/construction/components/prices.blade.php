@@ -533,10 +533,10 @@
 
       <div class="col-12 d-flex justify-content-between">
         <button class="btn btn-label-secondary btn-prev" disabled><i class="ti ti-arrow-left me-sm-1"></i>
-          <span class="align-middle d-sm-inline-block d-none">{{__('lang.Previous')}}</span>
+          <span class="align-middle d-sm-inline-block d-none"></span>
         </button>
         <button class="btn btn-primary btn-next btn-next-price-active">
-          <span class="align-middle d-sm-inline-block d-none me-sm-1">{{__('lang.Next')}}</span>
+          <span class="align-middle d-sm-inline-block d-none me-sm-1">{{__('lang.Renewal code')}}</span>
           <i class="ti ti-arrow-right"></i>
         </button>
         <button class="btn btn-primary waves-effect waves-light d-none btn-next-price-disable" type="button"

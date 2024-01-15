@@ -88,39 +88,8 @@
           @include('construction.components.prices')
           <!-- Renewal Code -->
           @include('construction.components.renewal-code')
-          <!-- Address -->
-          <div id="building-specifications" class="content">
-            <div class="content-header mb-3">
-              <h6 class="mb-0">Address</h6>
-              <small>Enter Your Address.</small>
-            </div>
-            <div class="row g-3">
-              <div class="col-sm-6">
-                <label class="form-label" for="address-input">Address</label>
-                <input type="text" class="form-control" id="address-input"
-                       placeholder="98  Borough bridge Road, Birmingham">
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="landmark">Landmark</label>
-                <input type="text" class="form-control" id="landmark" placeholder="Borough bridge">
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="pincode">Pincode</label>
-                <input type="text" class="form-control" id="pincode" placeholder="658921">
-              </div>
-              <div class="col-sm-6">
-                <label class="form-label" for="city">City</label>
-                <input type="text" class="form-control" id="city" placeholder="Birmingham">
-              </div>
-              <div class="col-12 d-flex justify-content-between">
-                <button class="btn btn-label-secondary btn-prev"><i class="ti ti-arrow-left me-sm-1"></i>
-                  <span class="align-middle d-sm-inline-block d-none">Previous</span>
-                </button>
-                <button class="btn btn-primary btn-next"><span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
-                  <i class="ti ti-arrow-right"></i></button>
-              </div>
-            </div>
-          </div>
+          <!-- Building Specifications -->
+          @include('construction.components.building-specifications')
           <!-- Review -->
           <div id="calculate-expense" class="content">
 

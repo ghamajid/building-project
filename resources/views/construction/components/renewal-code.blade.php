@@ -37,10 +37,10 @@
       <div class="col-sm-3"></div>
       <div class="col-12 d-flex justify-content-between">
         <button class="btn btn-label-secondary btn-prev"><i class="ti ti-arrow-left me-sm-1"></i>
-          <span class="align-middle d-sm-inline-block d-none">{{__('lang.Previous')}}</span>
+          <span class="align-middle d-sm-inline-block d-none">{{__('lang.Prices')}}</span>
         </button>
         <button class="btn btn-primary btn-next btn-next-renewal-code-active">
-          <span class="align-middle d-sm-inline-block d-none me-sm-1">{{__('lang.Next')}}</span>
+          <span class="align-middle d-sm-inline-block d-none me-sm-1">{{__('lang.Building specifications')}}</span>
           <i class="ti ti-arrow-right"></i>
         </button>
         <button class="btn btn-primary waves-effect waves-light d-none btn-next-renewal-code-disable" type="button"

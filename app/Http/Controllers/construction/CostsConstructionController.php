@@ -262,16 +262,18 @@ class CostsConstructionController extends Controller
         $project->renewal_code = $request->renewal_code_7.$request->renewal_code_6.$request->renewal_code_5.$request->renewal_code_4.$request->renewal_code_3.$request->renewal_code_2.$request->renewal_code_1;
         $project->user_id = Auth::id();
         $project->save();
-
         foreach($html->find('div[id="fshMainDiv"] table[class="list"] tr[class="list-even"] td[class="list-normal-first"]') as $index=>$param) {
-          if($index == 0){
+
+          if($index == 0 && $param->innertext){
             $amount = explode(':',$param->innertext);
-            $amount_s = str_replace(' ', '', $amount[1]);
+            $amount_s = trim(str_replace(' ', '', $amount[1]));
+            if(!$amount_s){
+              return response()->json(['message' => "Property information is incomplete"], 500);
+            }
             $project->approved_area = $amount_s;
             $project->save();
           }
         }
-
 
         foreach($html->find('div[id="__divBotDetail"] table') as $index=>$table) {
           if($index == 1){
@@ -282,33 +284,55 @@ class CostsConstructionController extends Controller
               $regulation->project_id = $project->id;
               foreach ($list->find('td') as $index=>$td){
                 if($index == 0){
-                  $regulation->title = $td->innertext;
+                  $regulation->title = trim($td->innertext);
                 }
                 if($index == 1){
-                  $regulation->unit = $td->innertext;
+                  $regulation->unit = trim($td->innertext);
                 }
                 if($index == 2){
-                  $regulation->amount = $td->innertext;
+                  $regulation->amount = trim($td->innertext);
                 }
                 if($index == 3){
-                  $regulation->description = $td->innertext;
+                  $regulation->description = trim($td->innertext);
                 }
               }
               $regulation->save();
             }
           }
-          /*if($a->innertext == 'دانلود آهنگ') {
-            $links[] = $a;
-          }*/
+        }
+        //Density
+        $regulation = Regulation::where('project_id',$project->id)->where('title','تراکم')->first();
+        if($regulation && $regulation->description){
+          $numbers =array();
+          $alpha = array();
+          $array = str_split($regulation->description);
+          for($x = 0; $x< count($array); $x++){
+            if(is_numeric($array[$x]))
+              array_push($numbers,$array[$x]);
+            else if($array[$x] == ".")
+              array_push($numbers,$array[$x]);
+            else
+              array_push($alpha,$array[$x]);
+          }// end for
+
+          //$alpha = implode($alpha);
+
+          if(count($numbers)){
+            $numbers_n = implode($numbers);
+            $project->foundation = $numbers_n;
+            $project->save();
+          }
 
         }
+
+
         $arr_p = [];
         $arr_p['regulation'] = Regulation::where('project_id',$project->id)->where('title','زیربنا در طبقات')->get()->toArray();
         $arr_p['project'] = $project->toArray();
         return response()->json($arr_p);
       }
     } catch (\Exception $e) {
-      return response()->json(['message' => "Server error"], 500);
+      return response()->json(['message' => "Server error","code"=>$e->getMessage()], 500);
     }
 
 

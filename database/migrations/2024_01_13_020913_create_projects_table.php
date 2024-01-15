@@ -21,6 +21,7 @@ return new class extends Migration
               ->on('users')
               ->onDelete('cascade');
             $table->float('approved_area')->nullable();;
+            $table->float('foundation')->nullable();;
             $table->timestamps();
         });
     }
