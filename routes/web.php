@@ -382,6 +382,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/costs', [CostsConstructionController::class, 'CostConstruction'])->name('costs');
     Route::post('/costs-insert', [CostsConstructionController::class, 'store'])->name('costs.insert');
     Route::post('/renewal-code-fetch', [CostsConstructionController::class, 'renewal_code_fetch'])->name('renewal.code.fetch');
+    Route::post('/building-specifications-fetch', [CostsConstructionController::class, 'building_specifications_fetch'])->name('building.specifications.fetch');
   });
 });
 

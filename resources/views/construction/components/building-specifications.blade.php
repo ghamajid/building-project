@@ -73,11 +73,11 @@
       <div class="col-sm-4">
         <label class="form-label d-block">{{__('lang.The number of units in the floors is equal')}}</label>
         <div class="form-check form-check-inline mt-3">
-          <input class="form-check-input" type="radio" name="number_units_in_floors_equal" value="1">
+          <input class="form-check-input" type="radio" name="number_units_in_floors_equal" checked value="1">
           <label class="form-check-label" for="inlineRadio1">{{__('lang.Yes')}}</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="number_units_in_floors_equal" checked value="0">
+          <input class="form-check-input" type="radio" name="number_units_in_floors_equal" value="0">
           <label class="form-check-label" for="inlineRadio2">{{__('lang.No')}}</label>
         </div>
       </div>
@@ -92,7 +92,7 @@
           <label class="form-check-label" for="inlineRadio2">{{__('lang.medium')}}</label>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_single_floors">{{__('lang.The number of single floors')}}</label>
         <div class="input-group input-group-merge">
@@ -101,7 +101,7 @@
           <span class="input-group-text">{{__('lang.Floor')}}</span>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_two_floors">{{__('lang.The number of two floors')}}</label>
         <div class="input-group input-group-merge">
@@ -110,7 +110,7 @@
           <span class="input-group-text">{{__('lang.Floor')}}</span>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_three_floors">{{__('lang.The number of three floors')}}</label>
         <div class="input-group input-group-merge">
@@ -119,7 +119,7 @@
           <span class="input-group-text">{{__('lang.Floor')}}</span>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_four_floors">{{__('lang.The number of four floors')}}</label>
         <div class="input-group input-group-merge">
@@ -128,7 +128,7 @@
           <span class="input-group-text">{{__('lang.Floor')}}</span>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_five_floors">{{__('lang.The number of five floors')}}</label>
         <div class="input-group input-group-merge">
@@ -137,7 +137,7 @@
           <span class="input-group-text">{{__('lang.Floor')}}</span>
         </div>
       </div>
-      <div class="col-sm-4  in_comp number_floors">
+      <div class="col-sm-4  in_comp number_floors" style="display: none;">
         <label class="form-label"
                for="number_six_floors">{{__('lang.The number of six floors')}}</label>
         <div class="input-group input-group-merge">
@@ -189,39 +189,43 @@
       </div>
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
-        <input class="form-check-input" type="checkbox" name="units_cabinets" value="" >
+        <input class="form-check-input" type="checkbox" name="units_cabinets" value="" checked>
         <label class="form-check-label" for="units_cabinets">
           {{__('lang.Units have cabinets')}}
         </label>
       </div>
-      <div class="col-sm-4">
-        <label class="form-label d-block">{{__('lang.Cabinet type')}}</label>
-        <div class="form-check form-check-inline mt-3">
-          <input class="form-check-input" type="radio" name="cabinet_type" checked value="1">
-          <label class="form-check-label" for="inlineRadio1">{{__('lang.Iranian')}}</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="cabinet_type" value="0">
-          <label class="form-check-label" for="inlineRadio2">{{__('lang.Foreign')}}</label>
-        </div>
+      <div class="col-sm-4 ">
+        <span class="element_cabinet_type">
+          <label class="form-label d-block">{{__('lang.Cabinet type')}}</label>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" type="radio" name="cabinet_type" checked value="1">
+            <label class="form-check-label" for="inlineRadio1">{{__('lang.Iranian')}}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="cabinet_type" value="0">
+            <label class="form-check-label" for="inlineRadio2">{{__('lang.Foreign')}}</label>
+          </div>
+        </span>
       </div>
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
-        <input class="form-check-input" type="checkbox" name="units_package" value="" >
+        <input class="form-check-input" type="checkbox" name="units_package" value="" checked>
         <label class="form-check-label" for="units_package">
           {{__('lang.Units have package')}}
         </label>
       </div>
       <div class="col-sm-4">
-        <label class="form-label d-block">{{__('lang.Package type')}}</label>
-        <div class="form-check form-check-inline mt-3">
-          <input class="form-check-input" type="radio" name="package_type" checked value="1">
-          <label class="form-check-label" >{{__('lang.Iranian')}}</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="package_type" value="0">
-          <label class="form-check-label" >{{__('lang.Foreign')}}</label>
-        </div>
+        <span class="element_package_type">
+          <label class="form-label d-block">{{__('lang.Package type')}}</label>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" type="radio" name="package_type" checked value="1">
+            <label class="form-check-label">{{__('lang.Iranian')}}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="package_type" value="0">
+            <label class="form-check-label">{{__('lang.Foreign')}}</label>
+          </div>
+        </span>
       </div>
       <div class="col-sm-4"></div>
 
@@ -233,7 +237,8 @@
           <span class="align-middle d-sm-inline-block d-none me-sm-1">{{__('lang.Next')}}</span>
           <i class="ti ti-arrow-right"></i>
         </button>
-        <button class="btn btn-primary waves-effect waves-light d-none btn-next-building-specifications-disable" type="button"
+        <button class="btn btn-primary waves-effect waves-light d-none btn-next-building-specifications-disable"
+                type="button"
                 disabled="">
           <span class="spinner-border me-1" role="status" aria-hidden="true"></span>
           {{__('lang.Loading')}}

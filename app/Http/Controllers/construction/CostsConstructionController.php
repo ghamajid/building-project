@@ -337,4 +337,9 @@ class CostsConstructionController extends Controller
 
 
   }
+
+  public function building_specifications_fetch(Request $request)
+  {
+    return response()->json(['1']);
+  }
 }

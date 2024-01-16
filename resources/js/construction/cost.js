@@ -41,15 +41,15 @@ $(function () {
       }
     }
   });
-  $("input").on('focus keyup', function() {
+  $("input").on('focus keyup', function () {
     var $input = $(this);
     var value = $input.val();
     var min = parseInt($(this).attr('min'));
     if (value < min) {
       $(this).val(min)
-    }else{
+    } else {
       var maxLength = parseInt($input.attr('maxlength'));
-      if(maxLength){
+      if (maxLength) {
         var remainingLength = maxLength - value.length;
         if (remainingLength < 0) {
           $input.val(value.substr(0, maxLength));
@@ -77,6 +77,7 @@ $(function () {
 
     const prices = wizardIcons.querySelector('#prices');
     var renewal_code = wizardIcons.querySelector('#renewal-code');
+    var building_specifications = wizardIcons.querySelector('#building-specifications');
 
     const iconsStepper = new Stepper(wizardIcons, {
       linear: false
@@ -713,42 +714,42 @@ $(function () {
         renewal_code_2: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
         renewal_code_3: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
         renewal_code_4: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
         renewal_code_5: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
         renewal_code_6: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
         renewal_code_7: {
           validators: {
             notEmpty: {
-              message:''
+              message: ''
             }
           }
         },
@@ -771,7 +772,7 @@ $(function () {
           }
         });
       }
-    }).on('core.form.invalid', function(event) {
+    }).on('core.form.invalid', function (event) {
       document.querySelector('.invalid-message').classList.remove("d-none");
     }).on('core.form.valid', function () {
       document.querySelector('.invalid-message').classList.add("d-none");
@@ -784,18 +785,199 @@ $(function () {
         type: 'POST',
         success: function success(status) {
           iconsStepper.next();
+          console.log(status.project.approved_area,'123456')
+          $('input[name=land_area]').val(status.project.approved_area)
+          $('input[name=total_area_infrastructure]').val(status.project.foundation)
+          $('input[name=total_number_floors]').val(status.regulation.length - 1)
           document.querySelector('.btn-next-renewal-code-active').classList.remove("d-none");
           document.querySelector('.btn-next-renewal-code-disable').classList.add("d-none");
           // sweetalert
         },
         error: function error(error) {
-          console.log(error.responseText)
           document.querySelector('.btn-next-renewal-code-active').classList.remove("d-none");
           document.querySelector('.btn-next-renewal-code-disable').classList.add("d-none");
           Swal.fire({
             icon: 'error',
-            title: trans('lang.Building renovation code')+'!',
-            text: trans('lang.'+JSON.parse(error.responseText).message),
+            title: trans('lang.Building renovation code') + '!',
+            text: trans('lang.' + JSON.parse(error.responseText).message),
+            confirmButtonText: trans('lang.Submit'),
+            customClass: {
+              confirmButton: 'btn btn-success'
+            }
+          });
+        }
+      });
+    });
+
+    const FormBuildingSpecifications = FormValidation.formValidation(building_specifications, {
+      fields: {
+        land_area: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.Land area')
+              })
+            }
+          }
+        },
+        total_area_infrastructure: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The total area of the infrastructure')
+              })
+            }
+          }
+        },
+        total_number_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.Total number of floors')
+              })
+            }
+          }
+        },
+        number_parking_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of parking floors')
+              })
+            }
+          }
+        },
+        number_basement_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.Number of basement floors')
+              })
+            }
+          }
+        },
+        number_units: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.Number of units')
+              })
+            }
+          }
+        },
+        number_single_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of single floors')
+              })
+            }
+          }
+        },
+        number_two_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of two floors')
+              })
+            }
+          }
+        },
+        number_three_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of three floors')
+              })
+            }
+          }
+        },
+        number_four_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of four floors')
+              })
+            }
+          }
+        },
+        number_five_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of five floors')
+              })
+            }
+          }
+        },
+        number_six_floors: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of six floors')
+              })
+            }
+          }
+        },
+        number_stone_facades_building: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of stone facades of the building')
+              })
+            }
+          }
+        },
+        number_cement_facades_building: {
+          validators: {
+            notEmpty: {
+              message: trans_choice('validation.required', 1, {
+                attribute: trans('lang.The number of cement facades of the building')
+              })
+            }
+          }
+        },
+      },
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          // Use this for enabling/changing valid/invalid class
+          // eleInvalidClass: '',
+          eleValidClass: '',
+          rowSelector: '.in_comp'
+        }),
+        autoFocus: new FormValidation.plugins.AutoFocus(),
+        submitButton: new FormValidation.plugins.SubmitButton()
+      },
+      init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+          //* Move the error message out of the `input-group` element
+          if (e.element.parentElement.classList.contains('input-group')) {
+            e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+          }
+        });
+      }
+    }).on('core.form.valid', function () {
+      // Jump to the next step when all fields in the current step are valid
+      document.querySelector('.btn-next-building-specifications-active').classList.add("d-none");
+      document.querySelector('.btn-next-building-specifications-disable').classList.remove("d-none");
+      $.ajax({
+        data: $('#form_renewal_code').serialize(),
+        url: "".concat(baseUrl, "construction/renewal-code-fetch"),
+        type: 'POST',
+        success: function success(status) {
+          iconsStepper.next();
+          document.querySelector('.btn-next-building-specifications-active').classList.remove("d-none");
+          document.querySelector('.btn-next-building-specifications-disable').classList.add("d-none");
+          // sweetalert
+        },
+        error: function error(error) {
+          document.querySelector('.btn-next-building-specifications-active').classList.remove("d-none");
+          document.querySelector('.btn-next-building-specifications-disable').classList.add("d-none");
+          Swal.fire({
+            icon: 'error',
+            title: trans('lang.Building renovation code') + '!',
+            text: trans('lang.' + JSON.parse(error.responseText).message),
             confirmButtonText: trans('lang.Submit'),
             customClass: {
               confirmButton: 'btn btn-success'
@@ -815,6 +997,9 @@ $(function () {
             case 1:
               FormRenewalCode.validate();
               break;
+            case 2:
+              FormBuildingSpecifications.validate();
+              break;
             default:
               break;
           }
@@ -833,5 +1018,44 @@ $(function () {
         alert('Submitted..!!');
       });
     }
+    $('input[type=radio][name=number_units_in_floors_equal]').change(function () {
+      if (this.value == '1') {
+        $('.number_floors').hide()
+        FormBuildingSpecifications.disableValidator('number_single_floors')
+        FormBuildingSpecifications.disableValidator('number_two_floors')
+        FormBuildingSpecifications.disableValidator('number_three_floors')
+        FormBuildingSpecifications.disableValidator('number_four_floors')
+        FormBuildingSpecifications.disableValidator('number_five_floors')
+        FormBuildingSpecifications.disableValidator('number_six_floors')
+      } else if (this.value == '0') {
+        $('.number_floors').show()
+        FormBuildingSpecifications.enableValidator('number_single_floors')
+        FormBuildingSpecifications.enableValidator('number_two_floors')
+        FormBuildingSpecifications.enableValidator('number_three_floors')
+        FormBuildingSpecifications.enableValidator('number_four_floors')
+        FormBuildingSpecifications.enableValidator('number_five_floors')
+        FormBuildingSpecifications.enableValidator('number_six_floors')
+      }
+      FormBuildingSpecifications.revalidateField('number_single_floors');
+      FormBuildingSpecifications.revalidateField('number_two_floors');
+      FormBuildingSpecifications.revalidateField('number_three_floors');
+      FormBuildingSpecifications.revalidateField('number_four_floors');
+      FormBuildingSpecifications.revalidateField('number_five_floors');
+      FormBuildingSpecifications.revalidateField('number_six_floors');
+    });
+    $('input[type=checkbox][name=units_cabinets]').change(function () {
+      if (this.checked) {
+        $('.element_cabinet_type').show()
+      } else {
+        $('.element_cabinet_type').hide()
+      }
+    });
+    $('input[type=checkbox][name=units_package]').change(function () {
+      if (this.checked) {
+        $('.element_package_type').show()
+      } else {
+        $('.element_package_type').hide()
+      }
+    });
   }
 })();
